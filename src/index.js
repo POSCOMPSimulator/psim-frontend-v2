@@ -11,6 +11,10 @@ import styled from 'styled-components';
 const rootElement = document.getElementById('root');
 const root = createRoot(rootElement);
 
+const AppBody = styled.div`
+  background-color: #f6f6f6 !important;
+`
+
 const AllButFooter = styled.div`
     min-height: calc(100vh - 21px);
 `;
@@ -18,11 +22,13 @@ const AllButFooter = styled.div`
 root.render(
   <>
     <BrowserRouter>
-      <AllButFooter>
-        <Header />
-        <App />
-      </AllButFooter>
-      <Footer />
+      <AppBody>
+        <AllButFooter>
+          <Header />
+          <App />
+        </AllButFooter>
+        <Footer />
+      </AppBody>
     </BrowserRouter>
   </>,
 );

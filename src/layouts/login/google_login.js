@@ -35,6 +35,7 @@ const google_login = async (res) => {
       console.log(data)
       localStorage.setItem('img-perfil', data.foto_perfil)
       localStorage.setItem('access-level', data.nivel_acesso)
+      localStorage.setItem('user-email', data.email)
     })
     .catch(err => alert(err))
   return respostaLogin

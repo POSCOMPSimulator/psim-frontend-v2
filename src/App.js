@@ -1,24 +1,54 @@
-import logo from './logo.svg';
-import './App.css';
+import { Routes, Route, Navigate } from 'react-router-dom'
+
+import Home from './components/home/Home'
+import BancoQuestoes from './components/banco-questoes/BancoQuestoes'
+import Equipe from './components/equipe/Equipe'
+import Perfil from './components/perfil/Perfil'
+import EditorQuestao from './components/editor-questao/EditorQuestao'
+import CriadorSimulado from './components/criador-simulado/CriadorSimulado'
+import AmbienteSimulacao from './components/ambiente-simulacao/AmbienteSimulacao'
+import NoMatch from './components/errors/NoMatch'
+
+const ProtectedRoute = ({ children }) => {
+  let token = localStorage.getItem('auth-token')
+  if (!token) {
+    return <Navigate to="/" replace />;
+  }
+
+  return children;
+};
 
 function App() {
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Routes>
+        <Route path='/' exact element={<Home />} />
+        <Route path='/questoes' element={<BancoQuestoes />} />
+        <Route path='/equipe' element={<Equipe />} />
+        <Route path='/perfil' element={
+          <ProtectedRoute>
+            <Perfil />
+          </ProtectedRoute>
+        } />
+        <Route path='/simulado/novo' element={
+          <ProtectedRoute>
+            <CriadorSimulado />
+          </ProtectedRoute>
+        } />
+        <Route path='/simulado/realizar/:id' element={
+          <ProtectedRoute>
+            <AmbienteSimulacao />
+          </ProtectedRoute>
+        } />
+        <Route path='/questoes/editar' element={
+          <ProtectedRoute>
+            <EditorQuestao />
+          </ProtectedRoute>
+        } />
+        <Route path='*' element={<NoMatch />} />
+      </Routes>
+    </>
   );
 }
 

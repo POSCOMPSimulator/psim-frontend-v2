@@ -1,17 +1,28 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
 import App from './App';
-import reportWebVitals from './reportWebVitals';
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+import { createRoot } from 'react-dom/client';
+import { BrowserRouter } from 'react-router-dom';
+
+import 'semantic-ui-css/semantic.min.css'
+import Header from './layouts/header/Header';
+import Footer from './layouts/footer/Footer';
+import styled from 'styled-components';
+
+const rootElement = document.getElementById('root');
+const root = createRoot(rootElement);
+
+const AllButFooter = styled.div`
+    min-height: calc(100vh - 21px);
+`;
+
 root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
+  <>
+    <BrowserRouter>
+      <AllButFooter>
+        <Header />
+        <App />
+      </AllButFooter>
+      <Footer />
+    </BrowserRouter>
+  </>,
 );
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();

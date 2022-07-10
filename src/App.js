@@ -7,6 +7,7 @@ import Perfil from './components/perfil/Perfil'
 import EditorQuestao from './components/editor-questao/EditorQuestao'
 import CriadorSimulado from './components/criador-simulado/CriadorSimulado'
 import AmbienteSimulacao from './components/ambiente-simulacao/AmbienteSimulacao'
+import ResultadoSimulado from './components/resultado-simulado/ResultadoSimulado'
 import NoMatch from './components/errors/NoMatch'
 
 const ProtectedRoute = ({ children }) => {
@@ -39,6 +40,11 @@ function App() {
         <Route path='/simulado/realizar/:id' element={
           <ProtectedRoute>
             <AmbienteSimulacao />
+          </ProtectedRoute>
+        } />
+        <Route path='/simulado/resultado/:id' element={
+          <ProtectedRoute>
+            <ResultadoSimulado />
           </ProtectedRoute>
         } />
         <Route path='/questoes/editar' element={

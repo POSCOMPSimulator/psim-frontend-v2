@@ -18,9 +18,13 @@
     "styled-components": "^5.3.5",
     "web-vitals": "^2.1.4"
   },
+  "overrides": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
   "scripts": {
     "start": "./init.sh && react-scripts start",
-    "build": "./init.sh && react-scripts build --legacy-peer-deps",
+    "build": "./init.sh && react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

@@ -25,7 +25,7 @@ function Filtro(props) {
     const [anos, setAnos] = useState([])
     const [areas, setAreas] = useState([])
     const [apenasSinalizadas, setApenasSinalizadas] = useState(false)
-    const univel = localStorage.getItem('access-level') || 0
+    const univel = parseInt(localStorage.getItem('access-level')) || 0
 
     useEffect(() => {
 

@@ -49,7 +49,7 @@ function Header() {
                                     <Dropdown.Item text='Simulados' href='/perfil?tab=simulados' />
                                     <Dropdown.Item text='Estatísticas' href='/perfil?tab=estatisticas' />
                                     <Dropdown.Item text='Configurações' href='/perfil?tab=config' />
-                                    {localStorage.getItem('access-level') > 0 ?
+                                    {parseInt(localStorage.getItem('access-level')) > 0 ?
                                         <>
                                             <Dropdown.Divider />
                                             <Dropdown.Item href='/perfil?tab=moderacao'>

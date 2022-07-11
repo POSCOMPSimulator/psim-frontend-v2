@@ -30,7 +30,7 @@ function Questao({ questao }) {
 	const [stateResp, setResposta] = useState("");
 	const [bugText, setBugText] = useState("")
 	const navigate = useNavigate()
-	const univel = localStorage.getItem('access-level') || 0
+	const univel = parseInt(localStorage.getItem('access-level')) || 0
 
 	function getEnunciado() {
 

@@ -1,9 +1,13 @@
+import { useEffect } from "react"
+import { useNavigate } from "react-router-dom"
+
 function Home() {
 
+    let navigate = useNavigate()
 
-    return (
-        <h1>Here goes the home page!</h1>
-    )
+    useEffect(() => {
+        navigate('/sobre')
+    })
 
 }
 

@@ -26,16 +26,16 @@ const panes = [
         render: () => <Estatisticas />,
     },
     {
-        name: 'moderacao',
-        menuItem: 'Moderação',
-        require: 1,
-        render: () => <Moderacao />,
-    },
-    {
         name: 'config',
         menuItem: 'Configurações',
         require: 0,
         render: () => <Config />,
+    },
+    {
+        name: 'moderacao',
+        menuItem: 'Moderação',
+        require: 1,
+        render: () => <Moderacao />,
     },
 ]
 
@@ -44,10 +44,9 @@ function Perfil() {
     const getTabIndexByName = function (name) {
         let tab_index = 0
         panes.forEach((element, index) => {
-            if (element.name === name && parseInt(localStorage.getItem('access-level')) > element.require)
+            if (element.name === name && parseInt(localStorage.getItem('access-level')) >= element.require) 
                 tab_index = index
         });
-
         return tab_index
     }
 

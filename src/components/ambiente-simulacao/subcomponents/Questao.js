@@ -62,7 +62,6 @@ function Questao({ questao, updater }) {
 										setResposta(value)
 										questao.resposta = value
 										updater(questao.index, questao)
-										console.log(ind)
 									}} />
 									<InlineTex texContent={resp} />
 								</List.Content>

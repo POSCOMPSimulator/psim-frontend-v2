@@ -2,7 +2,7 @@ import { Routes, Route, Navigate } from 'react-router-dom'
 
 import Home from './components/home/Home'
 import BancoQuestoes from './components/banco-questoes/BancoQuestoes'
-import Equipe from './components/equipe/Equipe'
+import Sobre from './components/sobre/Sobre'
 import Perfil from './components/perfil/Perfil'
 import EditorQuestao from './components/editor-questao/EditorQuestao'
 import CriadorSimulado from './components/criador-simulado/CriadorSimulado'
@@ -26,7 +26,7 @@ function App() {
       <Routes>
         <Route path='/' exact element={<Home />} />
         <Route path='/questoes' element={<BancoQuestoes />} />
-        <Route path='/equipe' element={<Equipe />} />
+        <Route path='/sobre' element={<Sobre />} />
         <Route path='/perfil' element={
           <ProtectedRoute>
             <Perfil />

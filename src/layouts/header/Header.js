@@ -35,8 +35,8 @@ function Header() {
                 <Image src={require('../../assets/images/logo.png')} alt='PSIM' size='tiny' />
             </Menu.Item>
             <Menu.Menu position='right'>
+                <Menu.Item href='/sobre'>Sobre</Menu.Item>
                 <Menu.Item href='/questoes'>Questões</Menu.Item>
-                <Menu.Item href='/equipe'>Equipe</Menu.Item>
                 {
                     logado ?
                         <Menu.Item>

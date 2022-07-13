@@ -1,8 +1,17 @@
+import styled from "styled-components";
+
+const ConfigContainer = styled.div`
+    padding: 15px 7rem 20px 7rem;
+    text-align: center;
+`;
+
 function Config() {
 
     return (
         
-                <h4 className="text-info">Config</h4>
+        <ConfigContainer>
+            Página em construção.
+        </ConfigContainer>
 
     )
 

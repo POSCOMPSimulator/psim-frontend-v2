@@ -98,7 +98,6 @@ function AmbienteSimulacao() {
                 }
             })
             .then((data) => {
-                console.log(data)
                 let q = data.questoes.map((q, i) => {
                     q.index = i
                     q.resposta = data.respostas_atuais[q.id]

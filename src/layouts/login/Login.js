@@ -15,7 +15,6 @@ function Login(props) {
             onSuccess={(res) => {
                 google_login(res).then(() => {
                     props.sucessful_login(localStorage.getItem('auth-token'))
-                    console.log('[Login Successfull]')
                 })
             }}
         />

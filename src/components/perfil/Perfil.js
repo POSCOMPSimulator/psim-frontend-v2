@@ -5,8 +5,12 @@ import Estatisticas from './subcomponents/Estatisticas'
 import Config from './subcomponents/Config'
 import Moderacao from './subcomponents/Moderacao'
 import User from "./subcomponents/User";
-
 import { Grid, Tab } from 'semantic-ui-react'
+import styled from "styled-components";
+
+const PerfilContainer = styled.div`
+    padding: 15px 7rem 20px 7rem;
+`;
 
 const panes = [
     {
@@ -56,7 +60,8 @@ function Perfil() {
     }
 
     return (
-        <Grid columns='equal' divided>
+        <PerfilContainer>
+            <Grid columns='equal' divided>
             <Grid.Column width={5}>
                 <User />
             </Grid.Column>
@@ -69,6 +74,7 @@ function Perfil() {
                 />
             </Grid.Column>
         </Grid>
+        </PerfilContainer>
     )
 
 }

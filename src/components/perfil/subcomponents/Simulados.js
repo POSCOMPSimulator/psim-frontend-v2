@@ -87,7 +87,7 @@ function Simulados() {
             .then((res) => {
                 let filteredSimulados = res.simulados.filter((v) => { return filtros.includes(v.estado) })
                 setEsperando(false)
-                setpagesNumber(Math.ceil(filteredSimulados.length / 8))
+                setpagesNumber(Math.ceil(filteredSimulados.length / 12))
                 setSimulados(filteredSimulados.map((s, i) => {
                     s.index = i
                     return s

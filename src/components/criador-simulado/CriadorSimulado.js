@@ -97,7 +97,7 @@ function CriadorSimulado() {
 
         let body = {}
         body.nome = inputValues.name
-        body.tempo_limite = parseInt(inputValues.time)
+        body.tempo_limite = parseInt(inputValues.time)*60
         body.anos = inputValues.years.map((v) => parseInt(v))
 
         body.areas = []

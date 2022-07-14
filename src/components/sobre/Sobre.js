@@ -77,6 +77,13 @@ function Sobre() {
 
             </p>
 
+            <h2>Reportando um problema</h2>
+
+            <p>
+                Esta é uma versão <i>alpha</i> do PSIM e portanto é muito importante recebermos feedback sobre erros encontrados pelos usuários.
+                Caso tenha encontrado um erro e deseje reportá-lo, clique <a href="https://forms.gle/g81U9Fnqjmj422G6A" target='_blank' rel="noreferrer">aqui</a>.
+            </p>
+
         </SobreContainer>
     )
 

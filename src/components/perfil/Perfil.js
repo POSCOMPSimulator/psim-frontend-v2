@@ -4,8 +4,7 @@ import Simulados from './subcomponents/Simulados'
 import Estatisticas from './subcomponents/Estatisticas'
 import Config from './subcomponents/Config'
 import Moderacao from './subcomponents/Moderacao'
-import User from "./subcomponents/User";
-import { Grid, Tab } from 'semantic-ui-react'
+import { Tab } from 'semantic-ui-react'
 import styled from "styled-components";
 
 const PerfilContainer = styled.div`
@@ -44,7 +43,7 @@ function Perfil() {
     const getTabIndexByName = function (name) {
         let tab_index = 0
         panes.forEach((element, index) => {
-            if (element.name === name && parseInt(localStorage.getItem('access-level')) >= element.require) 
+            if (element.name === name && parseInt(localStorage.getItem('access-level')) >= element.require)
                 tab_index = index
         });
         return tab_index
@@ -60,19 +59,12 @@ function Perfil() {
 
     return (
         <PerfilContainer>
-            <Grid columns='equal' divided>
-            <Grid.Column width={5}>
-                <User />
-            </Grid.Column>
-            <Grid.Column>
-                <Tab
-                    menu={{ secondary: true, fluid: true }}
-                    panes={panes.filter((v) => v.require <= parseInt(localStorage.getItem('access-level')))}
-                    onTabChange={(_, v) => toggle(v)}
-                    activeIndex={activeTab}
-                />
-            </Grid.Column>
-        </Grid>
+            <Tab
+                menu={{ secondary: true, fluid: true }}
+                panes={panes.filter((v) => v.require <= parseInt(localStorage.getItem('access-level')))}
+                onTabChange={(_, v) => toggle(v)}
+                activeIndex={activeTab}
+            />
         </PerfilContainer>
     )
 

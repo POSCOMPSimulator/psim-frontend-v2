@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Divider } from 'semantic-ui-react'
 
 const ConfigContainer = styled.div`
     padding: 15px 7rem 20px 7rem;
@@ -8,10 +9,12 @@ const ConfigContainer = styled.div`
 function Config() {
 
     return (
-        
-        <ConfigContainer>
-            Página em construção.
-        </ConfigContainer>
+        <>
+            <Divider />
+            <ConfigContainer>
+                Página em construção.
+            </ConfigContainer>
+        </>
 
     )
 

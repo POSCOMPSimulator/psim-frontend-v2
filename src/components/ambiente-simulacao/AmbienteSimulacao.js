@@ -246,7 +246,7 @@ function AmbienteSimulacao() {
                                 <span>O tempo de realização do simulado terminou, por favor clique em <b>Entregar Simulado</b></span> :
 
                                 <>
-                                    <Label size='large' color={cores[questaoAtual.area]} onClick={updateSimulado}>{questaoAtual.area}</Label>
+                                    <Label size='large' color={cores[questaoAtual.area]}>{questaoAtual.area}</Label>
 
                                     <CustomLabel onClick={() => setHidden(!hidden)} size='large'>
                                         {

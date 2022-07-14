@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Grid, Loader, Icon, Menu, Container, Dropdown, Confirm } from 'semantic-ui-react'
+import { Grid, Loader, Icon, Button, Container, Dropdown, Confirm, Divider } from 'semantic-ui-react'
 import styled from 'styled-components';
 import CardSimulado from './CardSimulado';
 import { useNavigate } from 'react-router-dom';
@@ -22,8 +22,8 @@ const GridSimulados = styled(Grid)`
 `;
 
 const CardSimulados = styled(Grid.Column)`
-    padding-top: 10px;
-    padding-bottom: 7.5px;
+    padding-top: 10px !important;
+    padding-bottom: 7.5px !important;
 `;
 
 const CustomRow = styled(Grid.Row)`
@@ -37,6 +37,15 @@ const Pag = styled.div`
 
 const CustomDrop = styled(Dropdown)`
     min-width: 400px !important;
+    float: right !important;
+`;
+
+const CustomButton = styled(Button)`
+    float: left !important;
+`;
+
+const CustomContainer = styled(Container)`
+    clear: both !important;
 `;
 
 const options = [
@@ -52,7 +61,6 @@ function Simulados() {
     const [actualPage, setActualPage] = useState(0)
     const [simulados, setSimulados] = useState([])
     const [open, setOpen] = useState(false)
-    const [activeItem, setActiveItem] = useState()
     const [openSimulado, setOpenSimulado] = useState(null)
     const navigate = useNavigate()
 
@@ -170,11 +178,6 @@ function Simulados() {
         )
     }
 
-    function handleNewSimulator() {
-        setActiveItem('new')
-        navigate('/simulado/novo')
-    }
-
     function renderLabel(label) {
         return {
             content: label.text,
@@ -184,31 +187,28 @@ function Simulados() {
 
     return (
         <Container>
-            <Menu>
-                <Menu.Item
-                    name='new'
-                    active={activeItem === 'new'}
-                    onClick={handleNewSimulator}
-                >
-                    Novo Simulado
-                </Menu.Item>
-                <Menu.Item position='right'>
-                    <CustomDrop
-                        fluid
-                        placeholder='Filtrar simulados'
-                        selection
-                        options={options}
-                        onChange={(_, d) => selecionaSimulados(d.value)}
-                        multiple
-                        renderLabel={renderLabel}
-                        clearable
-                    />
-                </Menu.Item>
-            </Menu>
-            <GridSimulados columns='equal' >
-                <CustomRow>{getRows()}</CustomRow>
-            </GridSimulados>
-            {pagination()}
+            <Divider />
+            <CustomButton
+                onClick={() => {navigate('/simulado/novo')}}
+                positive
+            >
+                Criar simulado
+            </CustomButton>
+            <CustomDrop
+                placeholder='Filtrar simulados'
+                selection
+                options={options}
+                onChange={(_, d) => selecionaSimulados(d.value)}
+                multiple
+                renderLabel={renderLabel}
+                clearable
+            />
+            <CustomContainer>
+                <GridSimulados columns='equal' >
+                    <CustomRow>{getRows()}</CustomRow>
+                </GridSimulados>
+                {pagination()}
+            </CustomContainer>
         </Container>
     )
 

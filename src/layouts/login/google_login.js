@@ -1,9 +1,9 @@
 const refreshTokenSetup = (res) => {
-    let refreshTiming = (res.tokenObj.expires_in || 3600 - 5 * 60) * 1000
+    let refreshTiming = 3300000 //(res.tokenObj.expires_in || 3600 - 5 * 60) * 1000
   
     const refreshToken = async () => {
       const newAuthRes = await res.reloadAuthResponse()
-      refreshTiming = (newAuthRes.expires_in || 3600 - 5 * 60) * 1000
+      refreshTiming = 3300000
       localStorage.setItem('auth-token', newAuthRes.id_token)
       setTimeout(refreshToken, refreshTiming)
     }

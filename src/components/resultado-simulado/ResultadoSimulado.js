@@ -87,9 +87,10 @@ function ResultadoSimulado() {
                     <Loader inline='centered' active={carregando} size='huge' /> :
                     <>
                         <SimulacaoContainer>
-                            <CustomLabel color='green' size='large'>Acertos: {acertos.tot}</CustomLabel>
-                            <CustomLabel color='red' size='large'>Erros: {erros.tot}</CustomLabel>
+
                             <CustomLabel size='large'>Brancos: {brancos.tot}</CustomLabel>
+                            <CustomLabel color='red' size='large'>Erros: {erros.tot}</CustomLabel>
+                            <CustomLabel color='green' size='large'>Acertos: {acertos.tot}</CustomLabel>
                             <Label size='large' color={cores[questaoAtual.area]}>{questaoAtual.area}</Label>
 
                             <CustomPagination

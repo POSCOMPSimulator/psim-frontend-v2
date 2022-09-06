@@ -10,10 +10,6 @@ const CustomMenu = styled(Menu)`
     padding: 1% 5% !important;
 `;
 
-const Container = styled.div`
-
-`;
-
 function Header() {
 
     let navigate = useNavigate()

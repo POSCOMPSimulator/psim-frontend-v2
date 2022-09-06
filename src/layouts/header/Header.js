@@ -7,6 +7,11 @@ import Login from '../login/Login'
 const CustomMenu = styled(Menu)`
     border-radius: 0 !important;
     margin-bottom: 0 !important;
+    padding: 1% 5% !important;
+`;
+
+const Container = styled.div`
+
 `;
 
 function Header() {

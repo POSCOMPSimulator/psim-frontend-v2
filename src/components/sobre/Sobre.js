@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 const SobreContainer = styled.div`
-    padding: 15px 7rem 20px 7rem;
+    padding: 1% 5%;
     text-align: justify;
 `;
 

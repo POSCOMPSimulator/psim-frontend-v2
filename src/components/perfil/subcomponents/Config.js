@@ -102,7 +102,9 @@ function Config() {
                     <Header as='h5'>Alterar nivel do usuário:</Header>
                     <Form.Group inline>
                         <Form.Input onChange={event => setPromoteUser(event.target.value.trim())} id='pr' placeholder='Nome do usuário' />
-                        <Form.Dropdown onChange={(_, el) => setPromoteLevelUser(el.value)} options={options.filter((el, i) => { if (i <= userInfo.nivel_acesso) return el })} placeholder='Nível de acesso' selection />
+                        <Form.Dropdown onChange={(_, el) => setPromoteLevelUser(el.value)} options={
+                            // eslint-disable-next-line
+                            options.filter((el, i) => { if (i <= userInfo.nivel_acesso) return el })} placeholder='Nível de acesso' selection />
                         <Form.Button loading={loading} onClick={reqPromoteUser} type='submit'>Enviar</Form.Button>
                     </Form.Group>
                 </Form>

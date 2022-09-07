@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Card, Label, Progress, Image, Statistic, Header, Loader, Form } from 'semantic-ui-react'
+import { Card, Label, Progress, Image, Statistic, Header, Loader } from 'semantic-ui-react'
 import styled from "styled-components";
 
 const FlexCenter = styled(Statistic.Group)`

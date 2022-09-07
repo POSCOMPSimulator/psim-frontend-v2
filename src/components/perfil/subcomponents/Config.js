@@ -3,9 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import { Divider, Form, Header, Loader, Button, Confirm } from 'semantic-ui-react'
 
 const options = [
-    { key: '0', value: 0, text: 'Usuário', label: { color: 'teal', circular: true, empty: true }},
-    { key: '1', value: 1, text: 'Moderador', label: { color: 'yellow', circular: true, empty: true }},
-    { key: '2', value: 2, text: 'Administrador', label: { color: 'violet', circular: true, empty: true }}
+    { key: '0', value: 0, text: 'Usuário', label: { color: 'teal', circular: true, empty: true } },
+    { key: '1', value: 1, text: 'Moderador', label: { color: 'yellow', circular: true, empty: true } },
+    { key: '2', value: 2, text: 'Administrador', label: { color: 'violet', circular: true, empty: true } }
 ]
 
 function Config() {
@@ -95,23 +95,19 @@ function Config() {
     }, [])
 
     function displayPromoteUser() {
-        return (userInfo ?
+        return (userInfo.nivel_acesso !== 0 ?
             <>
-                {userInfo.nivel_acesso !== 0 ?
-                    <>
-                        <Divider section/>
-                        <Form>
-                            <Header as='h5'>Alterar nivel do usuário:</Header>
-                            <Form.Group inline>
-                                <Form.Input onChange={event => setPromoteUser(event.target.value.trim())} id='pr' placeholder='Nome do usuário' />
-                                <Form.Dropdown onChange={(_, el) => setPromoteLevelUser(el.value)} options={options.filter((el, i) => {if (i <= userInfo.nivel_acesso) return el})} placeholder='Nível de acesso' selection />
-                                <Form.Button loading={loading} onClick={reqPromoteUser} type='submit'>Enviar</Form.Button>
-                            </Form.Group>
-                        </Form>
-                    </>
-                    : <></>}
-            </>
-            : <Loader inline='centered' active={loading} size='huge' />)
+                <Divider section />
+                <Form>
+                    <Header as='h5'>Alterar nivel do usuário:</Header>
+                    <Form.Group inline>
+                        <Form.Input onChange={event => setPromoteUser(event.target.value.trim())} id='pr' placeholder='Nome do usuário' />
+                        <Form.Dropdown onChange={(_, el) => setPromoteLevelUser(el.value)} options={options.filter((el, i) => { if (i <= userInfo.nivel_acesso) return el })} placeholder='Nível de acesso' selection />
+                        <Form.Button loading={loading} onClick={reqPromoteUser} type='submit'>Enviar</Form.Button>
+                    </Form.Group>
+                </Form>
+            </> : <></>
+        )
     }
 
     function displayDeleteUser() {
@@ -126,8 +122,12 @@ function Config() {
     return (
         <>
             <Divider />
-            {displayDeleteUser()}
-            {displayPromoteUser()}
+            {userInfo ?
+                <>
+                    {displayDeleteUser()}
+                    {displayPromoteUser()}
+                </> :
+                <Loader inline='centered' active={loading} size='huge' />}
         </>
 
     )

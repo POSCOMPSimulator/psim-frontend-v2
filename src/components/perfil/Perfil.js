@@ -10,7 +10,11 @@ import Moderacao from './subcomponents/Moderacao'
 import User from './subcomponents/User'
 
 const Container = styled.div`
-    padding: 1.5% 5%;
+    padding: 2% 5%;
+`;
+
+const MarginTab = styled(Tab)`
+    margin-left: 1.5%;
 `;
 
 const panes = [
@@ -66,7 +70,7 @@ function Perfil() {
                     <User></User>
                 </Grid.Column>
                 <Grid.Column width={13}>
-                    <Tab
+                    <MarginTab
                     menu={{ secondary: true, fluid: true }}
                     panes={panes.filter((v) => v.require <= parseInt(localStorage.getItem('access-level')))}
                     onTabChange={(_, v) => toggle(v)}

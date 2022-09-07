@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Card, Label, Progress, Image, Statistic, Header, Loader } from 'semantic-ui-react'
+import { Card, Label, Progress, Image, Statistic, Header, Loader, Form } from 'semantic-ui-react'
 import styled from "styled-components";
 
 const FlexCenter = styled(Statistic.Group)`
@@ -13,7 +13,7 @@ const StatisticMargin = styled(Statistic)`
 function User() {
 
     const [userInfo, setUserInfo] = useState();
-    const [loading, setLoading] = useState(true)
+    const [loading, setLoading] = useState(true);
 
     const cargosInfo = [{ color: "teal", role: "Usuário", icon: "fas fa-user" }, { color: "yellow", role: "Moderador", icon: "fas fa-user-edit" }, { color: "violet", role: "Administrador", icon: "fas fa-user-cog" }]
 
@@ -46,46 +46,6 @@ function User() {
     useEffect(() => {
         getUserInfo()
     }, [])
-
-    // function promoteUser() {
-    //     const token = localStorage.authToken
-
-    //     const reqOptions = {
-    //         method: 'PUT',
-    //         headers: {
-    //             'Content-Type': 'application/json',
-    //             'user-token': token,
-    //             'email': userEmail
-    //         }
-    //     }
-
-    //     fetch(process.env.REACT_APP_BACKEND + `usuario/`, reqOptions)
-    //         .then((resp) => {
-    //             if (!resp.ok) {
-    //                 alert("Erro ao acessar servidor")
-    //                 throw resp
-    //             }
-    //         })
-    //         .catch(function (error) {
-    //             console.log(error)
-    //         })
-    // }
-
-    // function displayPromoteUser() {
-    //     if (perfilData.nivel_acesso !== 0) {
-    //         return (
-    //             <Card.Content extra>
-    //                 <Form>
-    //                     <Header as='h5'>Promover usuário:</Header>
-    //                     <Form.Group inline>
-    //                         <Form.Input onChange={event => setUserEmail(event.target.value.trim())} id='pr' placeholder='email@mail.com' />
-    //                         <Form.Button onClick={promoteUser} color='red' type='submit'>Enviar</Form.Button>
-    //                     </Form.Group>
-    //                 </Form>
-    //             </Card.Content>
-    //         )
-    //     }
-    // }
 
     return (
         <div>
@@ -127,7 +87,6 @@ function User() {
                     </Card.Content>
                 </Card>
                 : <Card><Loader inline='centered' active={loading} size='huge' /></Card>}
-            {/* {displayPromoteUser()} */}
         </div>
     )
 }

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useSearchParams } from "react-router-dom";
-import { Tab } from 'semantic-ui-react'
+import { Tab, Grid } from 'semantic-ui-react'
 import styled from "styled-components";
 
 import Simulados from './subcomponents/Simulados'
@@ -9,8 +9,8 @@ import Config from './subcomponents/Config'
 import Moderacao from './subcomponents/Moderacao'
 import User from './subcomponents/User'
 
-const PerfilContainer = styled.div`
-    padding: 15px 7rem 20px 7rem;
+const Container = styled.div`
+    padding: 1.5% 5%;
 `;
 
 const panes = [
@@ -60,15 +60,21 @@ function Perfil() {
     }
 
     return (
-        <PerfilContainer>
-            <User></User>
-            <Tab
-                menu={{ secondary: true, fluid: true }}
-                panes={panes.filter((v) => v.require <= parseInt(localStorage.getItem('access-level')))}
-                onTabChange={(_, v) => toggle(v)}
-                activeIndex={activeTab}
-            />
-        </PerfilContainer>
+        <Container>
+            <Grid>
+                <Grid.Column width={3}>
+                    <User></User>
+                </Grid.Column>
+                <Grid.Column width={13}>
+                    <Tab
+                    menu={{ secondary: true, fluid: true }}
+                    panes={panes.filter((v) => v.require <= parseInt(localStorage.getItem('access-level')))}
+                    onTabChange={(_, v) => toggle(v)}
+                    activeIndex={activeTab}
+                    />
+                </Grid.Column>
+            </Grid>
+        </Container>
     )
 
 }

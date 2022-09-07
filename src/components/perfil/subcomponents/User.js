@@ -2,6 +2,14 @@ import { useState, useEffect } from 'react'
 import { Card, Label, Progress, Image, Statistic, Header, Loader } from 'semantic-ui-react'
 import styled from "styled-components";
 
+const FlexCenter = styled(Statistic.Group)`
+    justify-content: center !important;
+`;
+
+const StatisticMargin = styled(Statistic)`
+    margin: 5% !important;
+`;
+
 function User() {
 
     const [userInfo, setUserInfo] = useState();
@@ -82,7 +90,7 @@ function User() {
     return (
         <div>
             {userInfo ?
-                <Card>
+                <Card fluid>
                     <Image src={userInfo.foto_perfil} />
                     <Card.Content>
                         <Header as='h1'>{userInfo.nome}</Header>
@@ -95,16 +103,16 @@ function User() {
                     </Card.Content>
                     <Card.Content extra>
                         <Card.Description>
-                            <Statistic.Group>
-                                <Statistic>
+                            <FlexCenter>
+                                <StatisticMargin>
                                     <Statistic.Value>{userInfo.estatisticas.num_simulados_finalizados}</Statistic.Value>
                                     <Statistic.Label>Simulados</Statistic.Label>
-                                </Statistic>
-                                <Statistic>
+                                </StatisticMargin>
+                                <StatisticMargin>
                                     <Statistic.Value>{userInfo.estatisticas.num_comentarios_publicados}</Statistic.Value>
                                     <Statistic.Label>Comentários</Statistic.Label>
-                                </Statistic>
-                            </Statistic.Group>
+                                </StatisticMargin>
+                            </FlexCenter>
                         </Card.Description>
                     </Card.Content>
                     <Card.Content extra>

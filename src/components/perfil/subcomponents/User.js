@@ -77,13 +77,13 @@ function User() {
                     </Card.Content>
                     <Card.Content extra>
                         <p>Porcentagem de questões de Geral</p>
-                        <Progress percent={userInfo.estatisticas.porcentagem_questoes_feitas[0]} indicating progress />
+                        <Progress percent={Math.round(userInfo.estatisticas.porcentagem_questoes_feitas.geral)} indicating progress />
                         <p>Porcentagem de questões de Matemática</p>
-                        <Progress percent={userInfo.estatisticas.porcentagem_questoes_feitas[1]} indicating progress />
+                        <Progress percent={Math.round(userInfo.estatisticas.porcentagem_questoes_feitas.mat)} indicating progress />
                         <p>Porcentagem de questões de Fundamentos de Computação</p>
-                        <Progress percent={userInfo.estatisticas.porcentagem_questoes_feitas[2]} indicating progress />
+                        <Progress percent={Math.round(userInfo.estatisticas.porcentagem_questoes_feitas.tec)} indicating progress />
                         <p>Porcentagem de questões de Tecnologias da Computação</p>
-                        <Progress percent={userInfo.estatisticas.porcentagem_questoes_feitas[3]} indicating progress />
+                        <Progress percent={Math.round(userInfo.estatisticas.porcentagem_questoes_feitas.fun)} indicating progress />
                     </Card.Content>
                 </Card>
                 : <Card><Loader inline='centered' active={loading} size='huge' /></Card>}

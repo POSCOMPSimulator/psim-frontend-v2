@@ -1,11 +1,13 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useSearchParams } from "react-router-dom";
+import { Tab } from 'semantic-ui-react'
+import styled from "styled-components";
+
 import Simulados from './subcomponents/Simulados'
 import Estatisticas from './subcomponents/Estatisticas'
 import Config from './subcomponents/Config'
 import Moderacao from './subcomponents/Moderacao'
-import { Tab } from 'semantic-ui-react'
-import styled from "styled-components";
+import User from './subcomponents/User'
 
 const PerfilContainer = styled.div`
     padding: 15px 7rem 20px 7rem;
@@ -59,6 +61,7 @@ function Perfil() {
 
     return (
         <PerfilContainer>
+            <User></User>
             <Tab
                 menu={{ secondary: true, fluid: true }}
                 panes={panes.filter((v) => v.require <= parseInt(localStorage.getItem('access-level')))}

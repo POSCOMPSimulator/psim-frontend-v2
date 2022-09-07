@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
-import { Divider, Form, Header, Loader } from 'semantic-ui-react'
-import styled from "styled-components";
+import { useNavigate } from 'react-router-dom';
+import { Divider, Form, Header, Loader, Button, Confirm } from 'semantic-ui-react'
 
 const options = [
     { key: '0', value: 0, text: 'Usuário', label: { color: 'teal', circular: true, empty: true }},
@@ -10,12 +10,15 @@ const options = [
 
 function Config() {
 
+    let navigate = useNavigate()
     const [promoteUser, setPromoteUser] = useState()
     const [promoteLevelUser, setPromoteLevelUser] = useState()
     const [userInfo, setUserInfo] = useState();
     const [loading, setLoading] = useState(true);
+    const [isOpen, setIsOpen] = useState(false);
 
     function reqPromoteUser() {
+        setLoading(true)
         const reqOptions = {
             method: 'PUT',
             headers: {
@@ -33,6 +36,9 @@ function Config() {
             })
             .catch(function (error) {
                 console.log(error)
+            })
+            .finally(() => {
+                setLoading(false)
             })
     }
 
@@ -61,6 +67,29 @@ function Config() {
             })
     }
 
+    function deleteUser() {
+        const reqOptions = {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + localStorage.getItem('auth-token')
+            }
+        }
+
+        fetch(process.env.REACT_APP_BACKEND + 'usuario/', reqOptions)
+            .then((resp) => {
+                if (resp.ok) {
+                    localStorage.clear()
+                    navigate('/')
+                } else {
+                    console.log('Algo deu errado.')
+                }
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+    }
+
     useEffect(() => {
         getUserInfo()
     }, [])
@@ -69,22 +98,35 @@ function Config() {
         return (userInfo ?
             <>
                 {userInfo.nivel_acesso !== 0 ?
-                    <Form>
-                        <Header as='h5'>Promover usuário:</Header>
-                        <Form.Group inline>
-                            <Form.Input onChange={event => setPromoteUser(event.target.value.trim())} id='pr' placeholder='Nome do usuário' />
-                            <Form.Dropdown onChange={(_, el) => setPromoteLevelUser(el.value)} options={options.filter((el, i) => {if (i <= userInfo.nivel_acesso) return el})} placeholder='Nível de acesso' selection />
-                            <Form.Button onClick={reqPromoteUser} color='red' type='submit'>Enviar</Form.Button>
-                        </Form.Group>
-                    </Form>
+                    <>
+                        <Divider section/>
+                        <Form>
+                            <Header as='h5'>Alterar nivel do usuário:</Header>
+                            <Form.Group inline>
+                                <Form.Input onChange={event => setPromoteUser(event.target.value.trim())} id='pr' placeholder='Nome do usuário' />
+                                <Form.Dropdown onChange={(_, el) => setPromoteLevelUser(el.value)} options={options.filter((el, i) => {if (i <= userInfo.nivel_acesso) return el})} placeholder='Nível de acesso' selection />
+                                <Form.Button loading={loading} onClick={reqPromoteUser} type='submit'>Enviar</Form.Button>
+                            </Form.Group>
+                        </Form>
+                    </>
                     : <></>}
             </>
             : <Loader inline='centered' active={loading} size='huge' />)
     }
 
+    function displayDeleteUser() {
+        return (
+            <>
+                <Button onClick={() => setIsOpen(true)} color='red' type='submit'>Apagar minha conta</Button>
+                <Confirm open={isOpen} onCancel={() => setIsOpen(false)} onConfirm={() => deleteUser()} cancelButton='Cancelar' confirmButton="Apagar" content='Apagar conta?' />
+            </>
+        )
+    }
+
     return (
         <>
             <Divider />
+            {displayDeleteUser()}
             {displayPromoteUser()}
         </>
 

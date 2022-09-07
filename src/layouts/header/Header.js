@@ -39,7 +39,7 @@ function Header() {
                 <Menu.Item href='/sobre'>Sobre</Menu.Item>
                 <Menu.Item href='/questoes'>Questões</Menu.Item>
                 {
-                    logado ?
+                    localStorage.getItem('auth-token') ?
                         <Menu.Item>
                             <Dropdown
                                 trigger={<Image src={fotoPerfil} avatar size='tiny' />}

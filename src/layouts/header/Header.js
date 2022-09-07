@@ -50,14 +50,6 @@ function Header() {
                                     <Dropdown.Item text='Simulados' href='/perfil?tab=simulados' />
                                     <Dropdown.Item text='Estatísticas' href='/perfil?tab=estatisticas' />
                                     <Dropdown.Item text='Configurações' href='/perfil?tab=config' />
-                                    {parseInt(localStorage.getItem('access-level')) > 0 ?
-                                        <>
-                                            <Dropdown.Divider />
-                                            <Dropdown.Item href='/perfil?tab=moderacao'>
-                                                Moderação
-                                            </Dropdown.Item>
-                                        </> :
-                                        <></>}
                                     <Dropdown.Divider />
                                     <Dropdown.Item text='Sair' onClick={logout} />
                                 </Dropdown.Menu>

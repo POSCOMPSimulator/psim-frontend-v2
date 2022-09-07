@@ -6,7 +6,6 @@ import styled from "styled-components";
 import Simulados from './subcomponents/Simulados'
 import Estatisticas from './subcomponents/Estatisticas'
 import Config from './subcomponents/Config'
-import Moderacao from './subcomponents/Moderacao'
 import User from './subcomponents/User'
 
 const Container = styled.div`
@@ -35,13 +34,7 @@ const panes = [
         menuItem: 'Configurações',
         require: 0,
         render: () => <Config />,
-    },
-    {
-        name: 'moderacao',
-        menuItem: 'Moderação',
-        require: 1,
-        render: () => <Moderacao />,
-    },
+    }
 ]
 
 function Perfil() {
@@ -67,7 +60,7 @@ function Perfil() {
         <Container>
             <Grid>
                 <Grid.Column width={3}>
-                    <User></User>
+                    <User />
                 </Grid.Column>
                 <Grid.Column width={13}>
                     <MarginTab

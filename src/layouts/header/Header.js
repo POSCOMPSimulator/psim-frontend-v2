@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Menu, Image, Dropdown } from 'semantic-ui-react'
 import styled from 'styled-components';
-import Login from '../login/Login'
 
 const CustomMenu = styled(Menu)`
     border-radius: 0 !important;
@@ -37,6 +36,7 @@ function Header() {
             <Menu.Menu position='right'>
                 <Menu.Item href='/sobre'>Sobre</Menu.Item>
                 <Menu.Item href='/questoes'>Questões</Menu.Item>
+                <Menu.Item href='/registrar'>Registrar</Menu.Item>
                 {
                     logado ?
                         <Menu.Item>
@@ -62,7 +62,7 @@ function Header() {
                                 </Dropdown.Menu>
                             </Dropdown>
                         </Menu.Item> :
-                        <Login sucessful_login={setLogin} />
+                        <Menu.Item href='/entrar'>Entrar</Menu.Item>
                 }
             </Menu.Menu>
         </CustomMenu>

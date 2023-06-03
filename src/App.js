@@ -9,6 +9,8 @@ import CriadorSimulado from './components/criador-simulado/CriadorSimulado'
 import AmbienteSimulacao from './components/ambiente-simulacao/AmbienteSimulacao'
 import ResultadoSimulado from './components/resultado-simulado/ResultadoSimulado'
 import NoMatch from './components/errors/NoMatch'
+import SignUpForm from './components/registrar/Registrar'
+import SignInForm from './components/entrar/Entrar'
 
 const ProtectedRoute = ({ children }) => {
   let token = localStorage.getItem('auth-token')
@@ -27,6 +29,8 @@ function App() {
         <Route path='/' exact element={<Home />} />
         <Route path='/questoes' element={<BancoQuestoes />} />
         <Route path='/sobre' element={<Sobre />} />
+        <Route path='/registrar' element={<SignUpForm />} />
+        <Route path='/entrar' element={<SignInForm />} />
         <Route path='/perfil' element={
           <ProtectedRoute>
             <Perfil />

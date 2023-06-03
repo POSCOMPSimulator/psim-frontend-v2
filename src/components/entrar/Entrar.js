@@ -1,6 +1,9 @@
 import styled from "styled-components";
 import React, { useState } from 'react';
 import { Form, Input, Button, Header } from 'semantic-ui-react';
+import { login } from "../../network/lib/usuario";
+import { SemanticToastContainer, toast } from 'react-semantic-toasts';
+import 'react-semantic-toasts/styles/react-semantic-alert.css';
 
 const Container = styled.div`
     padding: 15px 7rem 20px 7rem;
@@ -10,6 +13,7 @@ const Container = styled.div`
 const SignInForm = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [loading, setLoading] = useState(false);
 
     const handleEmailChange = (event) => {
         setEmail(event.target.value);
@@ -22,9 +26,29 @@ const SignInForm = () => {
     const handleSubmit = (event) => {
         event.preventDefault();
 
+        setLoading(true)
+
         // Perform further processing or API call for signing up
-        console.log('Email:', email);
-        console.log('Password:', password);
+        login({
+            "email": email,
+            "senha": password,
+        })
+        .then((response) => {
+            console.log(response.data)
+            localStorage.setItem('psim_access_token', response.data['access_token'])
+            localStorage.setItem('psim_refresh_token', response.data['refresh_token'])
+            localStorage.setItem('verificado', response.data['user']['verificado'])
+        })
+        .catch((response) => {
+            toast({
+                title: 'Aconteceu um erro!',
+                type: 'error',
+                description: response.response.data.error
+            })
+        })
+        .finally(() => {
+            setLoading(false)
+        })
 
         // Reset the form after submission
         setEmail('');
@@ -33,6 +57,7 @@ const SignInForm = () => {
 
     return (
         <Container>
+            <SemanticToastContainer position="top-right" />
             <Header as='h2' textAlign='center'>Entre no PSIM</Header>
             <Form onSubmit={handleSubmit}>
                 <Form.Field>
@@ -53,7 +78,7 @@ const SignInForm = () => {
                         required
                     />
                 </Form.Field>
-                <Button type="submit">Entrar</Button>
+                <Button type="submit" loading={loading}>Entrar</Button>
             </Form>
         </Container>
     );

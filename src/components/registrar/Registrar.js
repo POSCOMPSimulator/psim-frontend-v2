@@ -1,6 +1,9 @@
 import styled from "styled-components";
 import React, { useState } from 'react';
 import { Form, Input, Button, Header } from 'semantic-ui-react';
+import { registra } from "../../network/lib/usuario";
+import { SemanticToastContainer, toast } from 'react-semantic-toasts';
+import 'react-semantic-toasts/styles/react-semantic-alert.css';
 
 const Container = styled.div`
     padding: 15px 7rem 20px 7rem;
@@ -12,6 +15,7 @@ const SignUpForm = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
+    const [loading, setLoading] = useState(false);
 
     const handleNameChange = (event) => {
         setName(event.target.value);
@@ -38,11 +42,30 @@ const SignUpForm = () => {
             return;
         }
 
+        setLoading(true)
         // Perform further processing or API call for signing up
-        console.log('Name:', name);
-        console.log('Email:', email);
-        console.log('Password:', password);
-        console.log('Confirm Password:', confirmPassword);
+        registra({
+            "email": email,
+            "nome": name,
+            "senha": password,
+            "confirma_senha": confirmPassword
+        })
+        .then(() => {
+            toast({
+                title: 'Registro feito com sucesso!',
+                type: "success"
+            })
+        })
+        .catch((response) => {
+            toast({
+                title: 'Aconteceu um erro!',
+                type: 'error',
+                description: response.response.data.error
+            })
+        })
+        .finally(() => {
+            setLoading(false)
+        })
 
         // Reset the form after submission
         setName('');
@@ -53,6 +76,7 @@ const SignUpForm = () => {
 
     return (
         <Container>
+            <SemanticToastContainer position="top-right" />
             <Header as='h2' textAlign='center'>Registre-se no PSIM</Header>
             <Form onSubmit={handleSubmit}>
                 <Form.Field>
@@ -91,7 +115,7 @@ const SignUpForm = () => {
                         required
                     />
                 </Form.Field>
-                <Button type="submit">Registrar</Button>
+                <Button type="submit" loading={loading}>Registrar</Button>
             </Form>
         </Container>
     );

@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom'
 import { Pagination, Icon, Label, Loader } from 'semantic-ui-react'
 import styled from 'styled-components'
 import Questao from './subcomponents/Questao'
+import { simuladoAPI } from "../../network/apiClient";
 
 const SimulacaoContainer = styled.div`
     padding: 15px 7rem 20px 7rem;
@@ -38,40 +39,33 @@ function ResultadoSimulado() {
 
     useEffect(() => {
 
-        const reqOptions = {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + localStorage.getItem('auth-token')
-            }
-        }
-
-        fetch(process.env.REACT_APP_BACKEND + '/simulado/' + id + '/', reqOptions)
+        simuladoAPI.get(id)
             .then((resp) => {
-                if (resp.ok) return resp.json()
+                if (resp.status === 200) {
+                    
+                    let data = resp.data
+                    console.log(data.respostas_atuais)
+
+                    let q = data.questoes.map((q, i) => {
+                        q.index = i
+                        q.alternativa_marcada = data.respostas_atuais.resps[i]
+                        return q
+                    })
+
+                    console.log(q)
+
+                    setQuestoes({ ...q })
+                    setQuestaoAtual(q['0'])
+                    setAcertos(data.correcao.acertos)
+                    setErros(data.correcao.erros)
+                    setBrancos(data.correcao.brancos)
+                    setCarregando(false)
+                }
                 else {
                     setCarregando(false)
                     console.log('Algo deu errado.')
                     console.log(resp)
                 }
-            })
-            .then((data) => {
-                console.log(data)
-                let q = data.questoes.map((q, i) => {
-                    q.index = i
-                    q.alternativa_marcada = data.respostas_atuais[q.id]
-                    return q
-                })
-
-                console.log(q)
-
-                setQuestoes({ ...q })
-                setQuestaoAtual(q['0'])
-                setAcertos(data.correcao.acertos)
-                setErros(data.correcao.erros)
-                setBrancos(data.correcao.brancos)
-                setCarregando(false)
-
             })
             .catch((error) => {
                 setCarregando(false)

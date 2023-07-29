@@ -4,6 +4,7 @@ import { Loader, Pagination, Icon, Label, Confirm } from 'semantic-ui-react'
 import styled from 'styled-components'
 import Questao from './subcomponents/Questao';
 import { useAutosave } from 'react-autosave';
+import { simuladoAPI } from "../../network/apiClient";
 
 const SimulacaoContainer = styled.div`
     padding: 15px 7rem 20px 7rem;
@@ -80,40 +81,31 @@ function AmbienteSimulacao() {
 
     useEffect(() => {
 
-        const reqOptions = {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + localStorage.getItem('auth-token')
-            }
-        }
-
-        fetch(process.env.REACT_APP_BACKEND + '/simulado/' + id + '/iniciar/', reqOptions)
+        simuladoAPI.atualizaEstado(id, 'iniciar', {})
             .then((resp) => {
-                if (resp.ok) return resp.json()
+                if (resp.status === 202) {
+                    let data = resp.data
+                    let q = data.questoes.map((q, i) => {
+                        q.index = i
+                        q.resposta = data.respostas_atuais[q.id]
+                        return q
+                    })
+    
+                    setQuestoes({ ...q })
+    
+                    setQuestaoAtual(q['0'])
+    
+                    tempoRestante.current = data.tempo_restante
+                    countdown.current = setInterval(countDown, 1000)
+                    setTimer(secondsToTime(data.tempo_restante))
+    
+                    setCarregando(false)
+                }
                 else {
                     setCarregando(false)
                     console.log('Algo deu errado.')
                     console.log(resp)
                 }
-            })
-            .then((data) => {
-                let q = data.questoes.map((q, i) => {
-                    q.index = i
-                    q.resposta = data.respostas_atuais[q.id]
-                    return q
-                })
-
-                setQuestoes({ ...q })
-
-                setQuestaoAtual(q['0'])
-
-                tempoRestante.current = data.tempo_restante
-                countdown.current = setInterval(countDown, 1000)
-                setTimer(secondsToTime(data.tempo_restante))
-
-                setCarregando(false)
-
             })
             .catch((error) => {
                 setCarregando(false)
@@ -126,34 +118,29 @@ function AmbienteSimulacao() {
 
         setAtualizando(true)
 
-        let aux = Object.keys(q).map(function (key) {
-            return {
-                [q[key].id]: q[key].resposta
-            }
+        let qids = []
+        let qresps = []
+
+        Object.keys(q).forEach(function (key) {
+            qids.push(q[key].id)
+
+            let r = q[key].resposta
+            if (r === undefined) r = -1
+
+            qresps.push(r)
         })
 
-        aux = aux.reduce((obj, item) => {
-            return {
-                ...obj,
-                ...item,
-            };
-        }, {})
-
-        const reqOptions = {
-            method: 'PATCH',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + localStorage.getItem('auth-token')
-            },
-            body: JSON.stringify({
-                tempo_restante: tempoRestante.current,
-                respostas: aux
-            })
+        let body = {
+            tempo_restante: tempoRestante.current,
+            respostas: {
+                ids: qids,
+                resps: qresps
+            }
         }
 
-        fetch(process.env.REACT_APP_BACKEND + '/simulado/' + id + '/', reqOptions)
+        simuladoAPI.atualizaRespostas(id, body)
             .then((resp) => {
-                if (resp.ok) {
+                if (resp.status === 200) {
                     console.log('OK')
                     setAtualizando(false)
                 }
@@ -171,7 +158,7 @@ function AmbienteSimulacao() {
         // eslint-disable-next-line
     }, []);
 
-    useAutosave({ data: questoes, onSave: updateSimulado, interval: 10000 });
+    useAutosave({ data: questoes, onSave: updateSimulado });
 
     function updateQuestao(index, questao) {
         setQuestoes({
@@ -197,27 +184,42 @@ function AmbienteSimulacao() {
 
         console.log(aux)
 
-        const reqOptions = {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + localStorage.getItem('auth-token')
-            },
-            body: JSON.stringify({
-                tempo_restante: tempoRestante.current,
-                respostas: aux
-            })
+        
+        let body = {
+            tempo_restante: tempoRestante.current,
+            respostas: aux
         }
 
-        fetch(process.env.REACT_APP_BACKEND + '/simulado/' + id + '/finalizar/', reqOptions)
+        // simuladoAPI.atualizaEstado(id, 'finalizar', body)
+        //     .then((resp) => {
+        //         if (resp.status === 202) navigate('/simulado')
+        //         else {
+        //             console.log('Algo deu errado.')
+        //             console.log(resp)
+        //         }
+        //     })
+        //     .catch((error) => {
+        //         console.log(error)
+        //     })
+        
+        simuladoAPI.atualizaRespostas(id, body)
             .then((resp) => {
-                if (resp.status === 301) navigate('/perfil')
-                else {
-                    console.log('Algo deu errado.')
-                    console.log(resp)
+                if (resp.status === 200) {
+                    simuladoAPI.atualizaEstado(id, 'finalizar', {})
+                        .then((resp) => {
+                            if (resp.status === 202) navigate('/simulado')
+                            else {
+                                console.log('Algo deu errado.')
+                                console.log(resp)
+                            }
+                        })
+                        .catch((error) => {
+                            console.log(error)
+                        })
                 }
             })
             .catch((error) => {
+                setAtualizando(false)
                 console.log(error)
             })
 

@@ -190,7 +190,7 @@ function Questao({ questao }) {
 						<></>
 				}
 
-				<Popup
+				{/* <Popup
 					closeOnDocumentClick={false}
 					trigger={
 						<Button
@@ -204,7 +204,7 @@ function Questao({ questao }) {
 						<Comentario qid={questao.id}/>
 					}
 					on='click'
-				/>
+				/> */}
 
 				<Button
 					content={stateResp ? "Ocultar resposta" : "Mostrar resposta"}

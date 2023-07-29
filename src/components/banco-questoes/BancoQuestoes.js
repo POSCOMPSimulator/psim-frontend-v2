@@ -3,6 +3,7 @@ import { Divider, Header } from 'semantic-ui-react'
 import styled from 'styled-components';
 import Filtro from './subcomponents/Filtro';
 import PainelQuestoes from './subcomponents/PainelQuestoes'
+import { questaoAPI } from '../../network/apiClient';
 
 const BancoContainer = styled.div`
     padding: 15px 7rem 20px 7rem;
@@ -31,24 +32,11 @@ function BancoQuestoes() {
         selectedAreas.forEach((e) => urlSearch.append('areas', e))
         if (apenasSinalizadas) urlSearch.append('sinalizadas', 'yes')
 
-        const reqOptions = {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        }
-
-        fetch(process.env.REACT_APP_BACKEND + 'questao/?' + urlSearch.toString(), reqOptions)
-            .then((resp) => {
-                if (resp.ok) return resp.json()
-                else {
-                    console.log('Algo deu errado.')
-                }
-            })
+        questaoAPI.get(urlSearch)
             .then((res) => {
-                setpagesNumber(Math.ceil(res.questoes.length / 12))
+                setpagesNumber(Math.ceil(res.data.questoes.length / 12))
                 setEsperando(false)
-                setQuestoes(res.questoes.map((q, i) => {
+                setQuestoes(res.data.questoes.map((q, i) => {
                     q.index = i
                     return q
                 }))

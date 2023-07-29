@@ -3,6 +3,7 @@ import { InlineTex } from 'react-tex';
 import { Button, Header, Comment, Form, Loader, Segment } from 'semantic-ui-react'
 import { toast } from 'react-semantic-toasts';
 import styled from 'styled-components';
+import { comentarioAPI } from '../../../network/apiClient';
 
 const CommentGroup = styled(Comment.Group)`
     min-width: 350px !important;
@@ -29,27 +30,14 @@ function Comentario(props) {
 
     function getComentarios() {
 
-        const reqOptions = {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        }
-
-        fetch(process.env.REACT_APP_BACKEND + 'comentario/questao/' + props.qid + '/', reqOptions)
+        comentarioAPI.listarComentariosQuestao(props.qid)
             .then((resp) => {
-                if (resp.ok) {
-                    return resp.json()
-                } else {
-                    console.log('Algo deu errado.')
-                    console.log(resp)
-                }
-            }).then((json) => {
-                setComentarios(json.comentarios)
+                setComentarios(resp.data.comentarios)
                 setEsperando(false)
             }).catch((error) => {
                 console.log(error)
             })
+            
     }
 
     useEffect(getComentarios, [props.qid])

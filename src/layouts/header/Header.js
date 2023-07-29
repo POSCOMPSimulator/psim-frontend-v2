@@ -11,7 +11,7 @@ const CustomMenu = styled(Menu)`
 function Header() {
 
     let navigate = useNavigate()
-    const token = localStorage.getItem('auth-token')
+    const token = localStorage.getItem('psim_access_token')
     const [logado, setLogin] = useState(token !== '' && token !== null)
     const [fotoPerfil, setFotoPerfil] = useState('http://tachyons.io/img/logo.jpg')
 
@@ -36,33 +36,40 @@ function Header() {
             <Menu.Menu position='right'>
                 <Menu.Item href='/sobre'>Sobre</Menu.Item>
                 <Menu.Item href='/questoes'>Questões</Menu.Item>
-                <Menu.Item href='/registrar'>Registrar</Menu.Item>
                 {
                     logado ?
-                        <Menu.Item>
-                            <Dropdown
-                                trigger={<Image src={fotoPerfil} avatar size='tiny' />}
-                                icon={null}
-                                floating
-                            >
-                                <Dropdown.Menu>
-                                    <Dropdown.Item text='Simulados' href='/perfil?tab=simulados' />
-                                    <Dropdown.Item text='Estatísticas' href='/perfil?tab=estatisticas' />
-                                    <Dropdown.Item text='Configurações' href='/perfil?tab=config' />
-                                    {parseInt(localStorage.getItem('access-level')) > 0 ?
-                                        <>
-                                            <Dropdown.Divider />
-                                            <Dropdown.Item href='/perfil?tab=moderacao'>
-                                                Moderação
-                                            </Dropdown.Item>
-                                        </> :
-                                        <></>}
-                                    <Dropdown.Divider />
-                                    <Dropdown.Item text='Sair' onClick={logout} />
-                                </Dropdown.Menu>
-                            </Dropdown>
-                        </Menu.Item> :
-                        <Menu.Item href='/entrar'>Entrar</Menu.Item>
+                    <>
+                        <Menu.Item href='/simulado'>Simulados</Menu.Item>
+                        <Menu.Item onClick={logout}>Sair</Menu.Item>
+                    </>
+                         :
+                        // <Menu.Item>
+                        //     <Dropdown
+                        //         trigger={<Image src={fotoPerfil} avatar size='tiny' />}
+                        //         icon={null}
+                        //         floating
+                        //     >
+                        //         <Dropdown.Menu>
+                        //             <Dropdown.Item text='Simulados' href='/perfil?tab=simulados' />
+                        //             <Dropdown.Item text='Estatísticas' href='/perfil?tab=estatisticas' />
+                        //             <Dropdown.Item text='Configurações' href='/perfil?tab=config' />
+                        //             {parseInt(localStorage.getItem('access-level')) > 0 ?
+                        //                 <>
+                        //                     <Dropdown.Divider />
+                        //                     <Dropdown.Item href='/perfil?tab=moderacao'>
+                        //                         Moderação
+                        //                     </Dropdown.Item>
+                        //                 </> :
+                        //                 <></>}
+                        //             <Dropdown.Divider />
+                        //             <Dropdown.Item text='Sair' onClick={logout} />
+                        //         </Dropdown.Menu>
+                        //     </Dropdown>
+                        // </Menu.Item> :
+                        <>
+                            <Menu.Item href='/registrar'>Registrar</Menu.Item>
+                            <Menu.Item href='/entrar'>Entrar</Menu.Item>
+                        </>
                 }
             </Menu.Menu>
         </CustomMenu>

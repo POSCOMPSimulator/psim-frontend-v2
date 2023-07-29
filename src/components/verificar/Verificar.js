@@ -11,18 +11,13 @@ const Container = styled.div`
     text-align: justify;
 `;
 
-const SignInForm = (props) => {
+const VerifyForm = (props) => {
     let navigate = useNavigate();
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+    const [verificationCode, setVerificationCode] = useState('');
     const [loading, setLoading] = useState(false);
 
-    const handleEmailChange = (event) => {
-        setEmail(event.target.value);
-    };
-
-    const handlePasswordChange = (event) => {
-        setPassword(event.target.value);
+    const handleVCChange = (event) => {
+        setVerificationCode(event.target.value);
     };
 
     const handleSubmit = (event) => {
@@ -31,15 +26,11 @@ const SignInForm = (props) => {
         setLoading(true)
 
         // Perform further processing or API call for signing up
-        usuarioAPI.login({
-            "email": email,
-            "senha": password,
+        usuarioAPI.verificar({
+            "codigo_verificacao": verificationCode,
         })
         .then((response) => {
-            localStorage.setItem('psim_access_token', response.data['access_token'])
-            localStorage.setItem('psim_refresh_token', response.data['refresh_token'])
-            localStorage.setItem('verificado', response.data['user']['verificado'])
-            localStorage.setItem('nivel_acesso', response.data['user']['nivel_acesso'])
+            localStorage.setItem('verificado', 'true')
             navigate('/')
         })
         .catch((response) => {
@@ -54,8 +45,7 @@ const SignInForm = (props) => {
         })
 
         // Reset the form after submission
-        setEmail('');
-        setPassword('');
+        setVerificationCode('');
     };
 
     return (
@@ -64,27 +54,18 @@ const SignInForm = (props) => {
             <Header as='h2' textAlign='center'>Entre no PSIM</Header>
             <Form onSubmit={handleSubmit}>
                 <Form.Field>
-                    <label>Email:</label>
+                    <label>Código de verificação:</label>
                     <Input
-                        type="email"
-                        value={email}
-                        onChange={handleEmailChange}
+                        type="text"
+                        value={verificationCode}
+                        onChange={handleVCChange}
                         required
                     />
                 </Form.Field>
-                <Form.Field>
-                    <label>Senha:</label>
-                    <Input
-                        type="password"
-                        value={password}
-                        onChange={handlePasswordChange}
-                        required
-                    />
-                </Form.Field>
-                <Button type="submit" loading={loading}>Entrar</Button>
+                <Button type="submit" loading={loading}>Verificar</Button>
             </Form>
         </Container>
     );
 };
 
-export default SignInForm;
+export default VerifyForm;

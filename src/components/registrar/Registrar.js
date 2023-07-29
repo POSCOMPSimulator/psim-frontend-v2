@@ -1,7 +1,8 @@
 import styled from "styled-components";
 import React, { useState } from 'react';
 import { Form, Input, Button, Header } from 'semantic-ui-react';
-import { registra } from "../../network/lib/usuario";
+import { useNavigate } from "react-router-dom";
+import { usuarioAPI } from "../../network/apiClient";
 import { SemanticToastContainer, toast } from 'react-semantic-toasts';
 import 'react-semantic-toasts/styles/react-semantic-alert.css';
 
@@ -11,6 +12,7 @@ const Container = styled.div`
 `;
 
 const SignUpForm = () => {
+    let navigate = useNavigate();
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -44,7 +46,7 @@ const SignUpForm = () => {
 
         setLoading(true)
         // Perform further processing or API call for signing up
-        registra({
+        usuarioAPI.registrar({
             "email": email,
             "nome": name,
             "senha": password,
@@ -55,6 +57,7 @@ const SignUpForm = () => {
                 title: 'Registro feito com sucesso!',
                 type: "success"
             })
+            navigate('/')
         })
         .catch((response) => {
             toast({

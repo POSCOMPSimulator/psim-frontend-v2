@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useSearchParams } from "react-router-dom";
-import Simulados from './subcomponents/Simulados'
 import Estatisticas from './subcomponents/Estatisticas'
 import Config from './subcomponents/Config'
 import Moderacao from './subcomponents/Moderacao'
@@ -12,12 +11,6 @@ const PerfilContainer = styled.div`
 `;
 
 const panes = [
-    {
-        name: 'simulados',
-        menuItem: 'Simulados',
-        require: 0,
-        render: () => <Simulados />,
-    },
     {
         name: 'estatisticas',
         menuItem: 'Estatísticas',
@@ -61,7 +54,7 @@ function Perfil() {
         <PerfilContainer>
             <Tab
                 menu={{ secondary: true, fluid: true }}
-                panes={panes.filter((v) => v.require <= parseInt(localStorage.getItem('access-level')))}
+                panes={panes.filter((v) => v.require <= parseInt(localStorage.getItem('nivel_acesso')))}
                 onTabChange={(_, v) => toggle(v)}
                 activeIndex={activeTab}
             />

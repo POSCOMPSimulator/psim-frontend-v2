@@ -9,6 +9,7 @@ import {
     Message
 } from 'semantic-ui-react'
 import styled from 'styled-components';
+import { simuladoAPI } from "../../network/apiClient";
 
 const CriadorContainer = styled.div`
     padding: 15px 7rem 20px 7rem;
@@ -112,25 +113,17 @@ function CriadorSimulado() {
             tec: parseInt(inputValues.qtdTec)
         }
 
-        const reqOptions = {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + localStorage.getItem('auth-token')
-            },
-            body: JSON.stringify(body)
-        }
-
-        fetch(process.env.REACT_APP_BACKEND + 'simulado/', reqOptions)
+        simuladoAPI.criar(body)
             .then((resp) => {
                 setCriando(false)
-                if (resp.ok) {
-                    navigate('/perfil?tab=simulados')
+                if (resp.status === 201) {
+                    navigate('/simulado')
                 }
 
                 throw Error(resp.statusText);
 
             }).catch((error) => {
+                setCriando(false)
                 setError({
                     header: 'Erro na criação',
                     content: error.message

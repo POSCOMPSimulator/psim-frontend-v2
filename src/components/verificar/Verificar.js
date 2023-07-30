@@ -30,7 +30,12 @@ const VerifyForm = (props) => {
             "codigo_verificacao": verificationCode,
         })
         .then((response) => {
-            localStorage.setItem('verificado', 'true')
+            toast({
+                title: 'Sua conta foi verificado com sucesso!',
+                type: 'success',
+                description: 'Por favor, faça um novo login!'
+            })
+            localStorage.clear()
             navigate('/')
         })
         .catch((response) => {
@@ -51,7 +56,7 @@ const VerifyForm = (props) => {
     return (
         <Container>
             <SemanticToastContainer position="top-right" />
-            <Header as='h2' textAlign='center'>Entre no PSIM</Header>
+            <Header as='h2' textAlign='center'>Verifique sua conta</Header>
             <Form onSubmit={handleSubmit}>
                 <Form.Field>
                     <label>Código de verificação:</label>

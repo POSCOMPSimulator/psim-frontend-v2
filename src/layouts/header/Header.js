@@ -13,7 +13,6 @@ function Header() {
     let navigate = useNavigate()
     const token = localStorage.getItem('psim_access_token')
     const [logado, setLogin] = useState(token !== '' && token !== null)
-    const [fotoPerfil, setFotoPerfil] = useState('http://tachyons.io/img/logo.jpg')
 
     function logout() {
         setLogin()
@@ -22,10 +21,8 @@ function Header() {
     }
 
     useEffect(() => {
-        if (logado) {
-            setFotoPerfil(localStorage.getItem('img-perfil'))
-        }
-    }, [fotoPerfil, logado])
+        setLogin(localStorage.getItem('psim_access_token'))
+    }, [localStorage.getItem('psim_refresh_token')])
 
 
     return (
@@ -39,6 +36,7 @@ function Header() {
                 {
                     logado ?
                     <>
+                        {localStorage.getItem('verificado') === "false" ? <Menu.Item href='/simulado'>Verificar<br/>Conta</Menu.Item> : <></>}
                         <Menu.Item href='/simulado'>Simulados</Menu.Item>
                         <Menu.Item onClick={logout}>Sair</Menu.Item>
                     </>

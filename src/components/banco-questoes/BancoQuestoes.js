@@ -17,10 +17,10 @@ function BancoQuestoes() {
     const [questoes, setQuestoes] = useState([])
 
     useEffect(() => {
-        selecionaQuestoes([], [], false)
+        selecionaQuestoes([], [], [], false)
     }, [])
 
-    function selecionaQuestoes(selectedYears, selectedAreas, apenasSinalizadas) {
+    function selecionaQuestoes(selectedYears, selectedAreas, selectedSubareas, apenasSinalizadas) {
 
         setpagesNumber(0)
         setEsperando(true)
@@ -30,6 +30,7 @@ function BancoQuestoes() {
         let urlSearch = new URLSearchParams()
         selectedYears.forEach((e) => urlSearch.append('anos', e))
         selectedAreas.forEach((e) => urlSearch.append('areas', e))
+        selectedSubareas.forEach((e) => urlSearch.append('subareas', e))
         if (apenasSinalizadas) urlSearch.append('sinalizadas', 'yes')
 
         questaoAPI.get(urlSearch)

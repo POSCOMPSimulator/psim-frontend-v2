@@ -22,8 +22,10 @@ function Filtro(props) {
 
     const [selectedYears, setSelectedYears] = useState([]);
     const [selectedAreas, setSelectedArea] = useState([]);
+    const [selectedSubareas, setSelectedSubarea] = useState([]);
     const [anos, setAnos] = useState([])
     const [areas, setAreas] = useState([])
+    const [subareas, setSubareas] = useState([])
     const [apenasSinalizadas, setApenasSinalizadas] = useState(false)
     const univel = parseInt(localStorage.getItem('access-level')) || 0
 
@@ -59,6 +61,14 @@ function Filtro(props) {
                         value: v
                     }
                 }))
+
+                setSubareas(res.subareas.toSorted((a,b) => a.localeCompare(b)).map(v => {
+                    return {
+                        key: v,
+                        text: v,
+                        value: v
+                    }
+                }))
             })
             .catch((error) => {
                 console.log(error)
@@ -91,6 +101,16 @@ function Filtro(props) {
                     clearable
                     options={areas}
                     onChange={(_, data) => { setSelectedArea(data.value); }} />
+                <DropdownAreas
+                    value={selectedSubareas}
+                    fluid
+                    placeholder='Subáreas'
+                    multiple
+                    selection
+                    closeOnChange
+                    clearable
+                    options={subareas}
+                    onChange={(_, data) => { setSelectedSubarea(data.value); }} />
                 {
                     univel > 0 ?
                         <FilterCheckbox>
@@ -104,7 +124,7 @@ function Filtro(props) {
                         </FilterCheckbox> :
                         <></>
                 }
-                <Button onClick={() => {props.selecionaQuestoes(selectedYears, selectedAreas, apenasSinalizadas)}} floated='right'>Aplicar</Button>
+                <Button onClick={() => {props.selecionaQuestoes(selectedYears, selectedAreas, selectedSubareas, apenasSinalizadas)}} floated='right'>Aplicar</Button>
             </Segment>
         </>
     )

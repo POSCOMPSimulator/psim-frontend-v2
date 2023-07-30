@@ -4,9 +4,9 @@ import {
     Button,
     Form,
     Input,
-    Radio,
     Header,
-    Message
+    Message,
+    Checkbox
 } from 'semantic-ui-react'
 import styled from 'styled-components';
 import { simuladoAPI } from "../../network/apiClient";
@@ -167,7 +167,7 @@ function CriadorSimulado() {
                     clearable
                 />
                 <Form.Field
-                    control={Radio}
+                    control={Checkbox}
                     checked={doDefault}
                     onClick={() => {
                         setDefault(!doDefault)

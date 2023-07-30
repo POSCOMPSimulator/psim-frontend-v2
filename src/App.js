@@ -1,6 +1,5 @@
 import { Routes, Route, Navigate } from 'react-router-dom'
 
-import Home from './components/home/Home'
 import BancoQuestoes from './components/banco-questoes/BancoQuestoes'
 import Sobre from './components/sobre/Sobre'
 import Perfil from './components/perfil/Perfil'
@@ -32,9 +31,8 @@ function App() {
   return (
     <>
       <Routes>
-        <Route path='/' exact element={<Home />} />
+        <Route path='/' exact element={<Sobre />} />
         <Route path='/questoes' element={<BancoQuestoes />} />
-        <Route path='/sobre' element={<Sobre />} />
         <Route path='/registrar' element={<SignUpForm />} />
         <Route path='/entrar' element={<SignInForm />} />
         <Route path='/verificar' element={<VerifyForm />} />

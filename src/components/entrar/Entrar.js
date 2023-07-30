@@ -40,7 +40,9 @@ const SignInForm = (props) => {
             localStorage.setItem('psim_refresh_token', response.data['refresh_token'])
             localStorage.setItem('verificado', response.data['user']['verificado'])
             localStorage.setItem('nivel_acesso', response.data['user']['nivel_acesso'])
-            navigate('/')
+
+            if (!response.data['user']['verificado']) navigate('/verificar')
+            else navigate('/')
         })
         .catch((response) => {
             toast({

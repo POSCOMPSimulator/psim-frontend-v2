@@ -62,6 +62,7 @@ const VerifyForm = (props) => {
                     <label>Código de verificação:</label>
                     <Input
                         type="text"
+                        placeholder="Insira o código enviado para o seu e-mail..."
                         value={verificationCode}
                         onChange={handleVCChange}
                         required

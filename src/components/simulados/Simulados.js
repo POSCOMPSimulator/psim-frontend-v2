@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Grid, Loader, Icon, Button, Container, Dropdown, Confirm, Divider } from 'semantic-ui-react'
+import { Grid, Loader, Icon, Button, Container, Dropdown, Confirm } from 'semantic-ui-react'
 import styled from 'styled-components';
 import CardSimulado from './subcomponents/CardSimulado';
 import { simuladoAPI } from "../../network/apiClient";
@@ -150,7 +150,7 @@ function Simulados() {
         if (pagesNumber === 0) {
             return (
                 <Pag>
-                    <span>Nenhum resultado encontrado</span>
+                    <span>Nenhum resultado encontrado.</span>
                 </Pag>
             )
         }

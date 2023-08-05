@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
-import { Card, Label, Progress, Image, Statistic, Header, Loader } from 'semantic-ui-react'
+import { Card, Label, Progress, Statistic, Header, Loader } from 'semantic-ui-react'
 import styled from "styled-components";
+import { usuarioAPI } from '../../../network/apiClient';
 
 const FlexCenter = styled(Statistic.Group)`
     justify-content: center !important;
@@ -18,25 +19,11 @@ function User() {
     const cargosInfo = [{ color: "teal", role: "Usuário", icon: "fas fa-user" }, { color: "yellow", role: "Moderador", icon: "fas fa-user-edit" }, { color: "violet", role: "Administrador", icon: "fas fa-user-cog" }]
 
     function getUserInfo() {
-
-        const reqOptions = {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + localStorage.getItem('auth-token')
-            }
-        }
-
-        fetch(process.env.REACT_APP_BACKEND + 'usuario/', reqOptions)
-            .then((resp) => {
-                if (resp.ok) return resp.json()
-                else {
-                    console.log('Algo deu errado.')
-                }
-            })
+        usuarioAPI.get()
             .then((res) => {
                 setLoading(false)
-                setUserInfo(res)
+                console.log(res.data)
+                setUserInfo(res.data)
             })
             .catch((error) => {
                 console.log(error)
@@ -51,13 +38,12 @@ function User() {
         <div>
             {userInfo ?
                 <Card fluid>
-                    <Image src={userInfo.foto_perfil} />
                     <Card.Content>
                         <Header as='h1'>{userInfo.nome}</Header>
                         <Card.Meta>
-                            <Label color={cargosInfo[userInfo.nivel_acesso].color} as='a' image>
-                                <i className={cargosInfo[userInfo.nivel_acesso].icon}></i>
-                                <span>{cargosInfo[userInfo.nivel_acesso].role}</span>
+                            <Label color={cargosInfo[Math.min(userInfo.nivel_acesso, 2)].color} as='label'>
+                                <i className={cargosInfo[Math.min(userInfo.nivel_acesso, 2)].icon}></i>
+                                <span>{cargosInfo[Math.min(userInfo.nivel_acesso, 2)].role}</span>
                             </Label>
                         </Card.Meta>
                     </Card.Content>

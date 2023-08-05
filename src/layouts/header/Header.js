@@ -1,21 +1,18 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Menu, Image, Dropdown } from 'semantic-ui-react'
+import { Menu, Image } from 'semantic-ui-react'
 import styled from 'styled-components';
-import Login from '../login/Login'
 
 const CustomMenu = styled(Menu)`
     border-radius: 0 !important;
     margin-bottom: 0 !important;
-    padding: 1% 5% !important;
 `;
 
 function Header() {
 
     let navigate = useNavigate()
-    const token = localStorage.getItem('auth-token')
+    const token = localStorage.getItem('psim_access_token')
     const [logado, setLogin] = useState(token !== '' && token !== null)
-    const [fotoPerfil, setFotoPerfil] = useState('http://tachyons.io/img/logo.jpg')
 
     function logout() {
         setLogin()
@@ -24,10 +21,8 @@ function Header() {
     }
 
     useEffect(() => {
-        if (logado) {
-            setFotoPerfil(localStorage.getItem('img-perfil'))
-        }
-    }, [fotoPerfil, logado])
+        setLogin(localStorage.getItem('psim_access_token'))
+    }, [localStorage.getItem('psim_refresh_token')])
 
 
     return (
@@ -36,26 +31,20 @@ function Header() {
                 <Image src={require('../../assets/images/logo.png')} alt='PSIM' size='tiny' />
             </Menu.Item>
             <Menu.Menu position='right'>
-                <Menu.Item href='/sobre'>Sobre</Menu.Item>
                 <Menu.Item href='/questoes'>Questões</Menu.Item>
                 {
-                    localStorage.getItem('auth-token') ?
-                        <Menu.Item>
-                            <Dropdown
-                                trigger={<Image src={fotoPerfil} avatar size='tiny' />}
-                                icon={null}
-                                floating
-                            >
-                                <Dropdown.Menu>
-                                    <Dropdown.Item text='Simulados' href='/perfil?tab=simulados' />
-                                    <Dropdown.Item text='Estatísticas' href='/perfil?tab=estatisticas' />
-                                    <Dropdown.Item text='Configurações' href='/perfil?tab=config' />
-                                    <Dropdown.Divider />
-                                    <Dropdown.Item text='Sair' onClick={logout} />
-                                </Dropdown.Menu>
-                            </Dropdown>
-                        </Menu.Item> :
-                        <Login sucessful_login={setLogin} />
+                    logado ?
+                        <>
+                            {localStorage.getItem('verificado') === "false" ? <Menu.Item href='/simulado'>Verificar<br />Conta</Menu.Item> : <></>}
+                            <Menu.Item href='/simulado'>Simulados</Menu.Item>
+                            <Menu.Item href='/perfil'>Perfil</Menu.Item>
+                            <Menu.Item onClick={logout}>Sair</Menu.Item>
+                        </>
+                        :
+                        <>
+                            <Menu.Item href='/registrar'>Registre-se</Menu.Item>
+                            <Menu.Item href='/entrar'>Entre</Menu.Item>
+                        </>
                 }
             </Menu.Menu>
         </CustomMenu>

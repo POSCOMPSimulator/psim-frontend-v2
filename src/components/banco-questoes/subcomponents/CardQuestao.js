@@ -6,6 +6,14 @@ const IsOverCard = styled(Card)`
     cursor: pointer !important;
 `;
 
+const LabelBehind = styled(Label)`
+    position: absolute;
+    z-index: 0;
+    top: -1em;
+    left: 100%;
+    margin: 0 0 0 -1.5em!important;
+`;
+
 function CardQuestao({ questao, ...rest }) {
 
     const univel = parseInt(localStorage.getItem('nivel_acesso')) || 0
@@ -46,9 +54,9 @@ function CardQuestao({ questao, ...rest }) {
                     {getIconSinalizacao()}
                     {questao.ano} - Questão {questao.numero}
                 </Card.Header>
-                <Label color={cores[questao.area]} floating circular>
+                <LabelBehind color={cores[questao.area]} circular>
                     {shortcuts[questao.area]}
-                </Label>
+                </LabelBehind>
             </Card.Content>
             <Card.Content extra>
                 <Label.Group>

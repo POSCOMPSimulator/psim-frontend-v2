@@ -4,11 +4,12 @@ import {
     Button,
     Form,
     Input,
-    Radio,
     Header,
-    Message
+    Message,
+    Checkbox
 } from 'semantic-ui-react'
 import styled from 'styled-components';
+import { simuladoAPI } from "../../network/apiClient";
 
 const CriadorContainer = styled.div`
     padding: 15px 7rem 20px 7rem;
@@ -19,6 +20,7 @@ const optionsYears = [
     { key: '2017', text: '2017', value: '2017' },
     { key: '2018', text: '2018', value: '2018' },
     { key: '2019', text: '2019', value: '2019' },
+    { key: '2022', text: '2022', value: '2022' },
 ]
 
 const defaultSim = {
@@ -26,7 +28,7 @@ const defaultSim = {
     qtdMat: '20',
     qtdFun: '30',
     qtdTec: '20',
-    years: ['2016', '2017', '2018', '2019'],
+    years: ['2016', '2017', '2018', '2019', '2022'],
     time: '240'
 }
 
@@ -112,25 +114,17 @@ function CriadorSimulado() {
             tec: parseInt(inputValues.qtdTec)
         }
 
-        const reqOptions = {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + localStorage.getItem('auth-token')
-            },
-            body: JSON.stringify(body)
-        }
-
-        fetch(process.env.REACT_APP_BACKEND + 'simulado/', reqOptions)
+        simuladoAPI.criar(body)
             .then((resp) => {
                 setCriando(false)
-                if (resp.ok) {
-                    navigate('/perfil?tab=simulados')
+                if (resp.status === 201) {
+                    navigate('/simulado')
                 }
 
                 throw Error(resp.statusText);
 
             }).catch((error) => {
+                setCriando(false)
                 setError({
                     header: 'Erro na criação',
                     content: error.message
@@ -173,7 +167,7 @@ function CriadorSimulado() {
                     clearable
                 />
                 <Form.Field
-                    control={Radio}
+                    control={Checkbox}
                     checked={doDefault}
                     onClick={() => {
                         setDefault(!doDefault)

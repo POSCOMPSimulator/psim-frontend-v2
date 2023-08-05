@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react'
-import { Grid, Loader, Icon, Button, Dropdown, Confirm, Divider } from 'semantic-ui-react'
+import { Grid, Loader, Icon, Button, Dropdown, Confirm } from 'semantic-ui-react'
 import styled from 'styled-components';
-import CardSimulado from './CardSimulado';
+import CardSimulado from './subcomponents/CardSimulado';
+import { simuladoAPI } from "../../network/apiClient";
 import { useNavigate } from 'react-router-dom';
 
 const IsOver = styled.span`
@@ -49,6 +50,10 @@ const CustomContainer = styled.div`
     clear: both !important;
 `;
 
+const SimuladoContainer = styled.div`
+    padding: 15px 7rem 20px 7rem;
+`;
+
 const options = [
     { key: 'N', value: 0, text: 'Não iniciado', label: { color: 'orange', circular: true, empty: true }, color: 'orange' },
     { key: 'E', value: 1, text: 'Em andamento', label: { color: 'yellow', circular: true, empty: true }, color: 'yellow' },
@@ -78,29 +83,20 @@ function Simulados() {
         setSimulados([])
         setActualPage(0)
 
-        const reqOptions = {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + localStorage.getItem('auth-token')
-            }
-        }
-
-        fetch(process.env.REACT_APP_BACKEND + 'simulado/', reqOptions)
+        simuladoAPI.listar()
             .then((resp) => {
-                if (resp.ok) return resp.json()
+                if (resp.status === 200) {
+                    let filteredSimulados = resp.data.simulados.filter((v) => { return filtros.includes(v.estado) })
+                    setEsperando(false)
+                    setpagesNumber(Math.ceil(filteredSimulados.length / 12))
+                    setSimulados(filteredSimulados.map((s, i) => {
+                        s.index = i
+                        return s
+                    }))
+                }
                 else {
                     console.log('Algo deu errado.')
                 }
-            })
-            .then((res) => {
-                let filteredSimulados = res.simulados.filter((v) => { return filtros.includes(v.estado) })
-                setEsperando(false)
-                setpagesNumber(Math.ceil(filteredSimulados.length / 12))
-                setSimulados(filteredSimulados.map((s, i) => {
-                    s.index = i
-                    return s
-                }))
             })
             .catch((error) => {
                 console.log(error)
@@ -150,7 +146,7 @@ function Simulados() {
         if (pagesNumber === 0) {
             return (
                 <Pag>
-                    <span>Nenhum resultado encontrado</span>
+                    <span>Nenhum resultado encontrado.</span>
                 </Pag>
             )
         }
@@ -184,8 +180,13 @@ function Simulados() {
     }
 
     return (
-        <div>
-            <Divider />
+        <SimuladoContainer>
+            <CustomButton
+                onClick={() => {navigate('/simulado/novo')}}
+                positive
+            >
+                Criar simulado
+            </CustomButton>
             <CustomDrop
                 placeholder='Filtrar simulados'
                 selection
@@ -195,19 +196,13 @@ function Simulados() {
                 renderLabel={renderLabel}
                 clearable
             />
-            <CustomButton
-                onClick={() => {navigate('/simulado/novo')}}
-                positive
-            >
-                Criar simulado
-            </CustomButton>
             <CustomContainer>
                 <GridSimulados columns='equal' >
                     <CustomRow>{getRows()}</CustomRow>
                 </GridSimulados>
                 {pagination()}
             </CustomContainer>
-        </div>
+        </SimuladoContainer>
     )
 
 }

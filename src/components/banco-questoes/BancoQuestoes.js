@@ -31,7 +31,7 @@ function BancoQuestoes() {
         selectedYears.forEach((e) => urlSearch.append('anos', e))
         selectedAreas.forEach((e) => urlSearch.append('areas', e))
         selectedSubareas.forEach((e) => urlSearch.append('subareas', e))
-        if (apenasSinalizadas) urlSearch.append('sinalizadas', 'yes')
+        if (apenasSinalizadas) urlSearch.append('sinalizadas', 'true')
 
         questaoAPI.get(urlSearch)
             .then((res) => {

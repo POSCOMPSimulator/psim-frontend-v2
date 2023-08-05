@@ -36,7 +36,7 @@ function Perfil() {
     const getTabIndexByName = function (name) {
         let tab_index = 0
         panes.forEach((element, index) => {
-            if (element.name === name && parseInt(localStorage.getItem('access-level')) >= element.require)
+            if (element.name === name && parseInt(localStorage.getItem('nivel_acesso')) >= element.require)
                 tab_index = index
         });
         return tab_index

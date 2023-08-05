@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { List, Button, Loader } from 'semantic-ui-react'
 import styled from 'styled-components';
+import { questaoAPI } from '../../../network/apiClient';
 
 const MsgErro = styled(List.Header)`
     max-width: 80%;
@@ -20,18 +21,9 @@ function ListaErros(props) {
 
         function resolverProblemas(msgs) {
 
-            const reqOptions = {
-                method: 'DELETE',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': 'Bearer ' + localStorage.getItem('auth-token')
-                },
-                body: JSON.stringify({ erros: msgs })
-            }
-            
-            fetch(process.env.REACT_APP_BACKEND + 'questao/' + props.qid + '/erros/', reqOptions)
+            questaoAPI.removerErros(props.qid, { erros: msgs })
                 .then((resp) => {
-                    if (resp.ok) {
+                    if (resp.status === 200) {
                         listarProblemas()
                     } else {
                         console.log('Algo deu errado!')
@@ -47,15 +39,7 @@ function ListaErros(props) {
 
             setEsperando(true)
 
-            const reqOptions = {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': 'Bearer ' + localStorage.getItem('auth-token')
-                }
-            }
-
-            fetch(process.env.REACT_APP_BACKEND + 'questao/' + props.qid + '/erros/', reqOptions)
+            questaoAPI.listarErros(props.qid)
                 .then((resp) => {
                     if (resp.ok) {
                         return resp.json()

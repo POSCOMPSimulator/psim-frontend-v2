@@ -88,7 +88,7 @@ export const questaoAPI = {
     sumario: () => { return axiosClient.get('/questao/sumario') },
     remover: (id) => { return axiosClient.delete(`/questao/${id}`) },
     listarErros: (id) => () => { return axiosClient.get(`/questao/${id}/erros`) },
-    removerErros: (id) => () => { return axiosClient.get(`/questao/${id}/erros`) },
+    removerErros: (id, data) => () => { return axiosClient.delete(`/questao/${id}/erros`, JSON.stringify(data)) },
 }
 
 export const simuladoAPI = {

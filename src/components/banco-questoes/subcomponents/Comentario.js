@@ -67,8 +67,8 @@ function Comentario(props) {
 
     function renderComentarios() {
 
-        const uemail = localStorage.getItem('user-email')
-        const univel = parseInt(localStorage.getItem('access-level'))
+        const uemail = localStorage.getItem('email')
+        const univel = parseInt(localStorage.getItem('nivel_acesso'))
 
         if (esperando) return (<></>)
 
@@ -77,7 +77,6 @@ function Comentario(props) {
         return comentarios.map((c, i) => {
             return (
                 <Comment key={i}>
-                    <Comment.Avatar src={c.foto_perfil} />
                     <Comment.Content>
                         <Comment.Author as='span'>{c.autor}</Comment.Author>
                         <Comment.Metadata>
@@ -120,19 +119,11 @@ function Comentario(props) {
     function publishComment() {
 
         setPublicando(true)
-
-        const reqOptions = {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + localStorage.getItem('auth-token')
-            },
-            body: JSON.stringify({ texto: commentText, data_publicacao: (new Date()).toISOString() })
-        }
-
-        fetch(process.env.REACT_APP_BACKEND + 'comentario/questao/' + props.qid + '/', reqOptions)
+        
+        let body = { texto: commentText, data_publicacao: (new Date()).toISOString() }
+        comentarioAPI.publicar(props.qid, body)
             .then((resp) => {
-                if (resp.ok) {
+                if (resp.status === 201) {
                     setPublicando(false)
                     setCommentText('')
                     getComentarios()
@@ -148,17 +139,9 @@ function Comentario(props) {
 
     function deleteComment(id) {
 
-        const reqOptions = {
-            method: 'DELETE',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + localStorage.getItem('auth-token')
-            }
-        }
-
-        fetch(process.env.REACT_APP_BACKEND + 'comentario/' + id + '/', reqOptions)
+        comentarioAPI.remover(id)
             .then((resp) => {
-                if (resp.ok) {
+                if (resp.status === 200) {
                     toast({
                         title: 'Comentário excluído com sucesso!',
                         icon: 'check',
@@ -177,16 +160,9 @@ function Comentario(props) {
 
     function reportComment(id) {
 
-        const reqOptions = {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        }
-
-        fetch(process.env.REACT_APP_BACKEND + 'comentario/' + id + '/', reqOptions)
+        comentarioAPI.sinalizar(id)
             .then((resp) => {
-                if (resp.ok) {
+                if (resp.status === 201) {
                     toast({
                         title: 'Comentário reportado com sucesso!',
                         icon: 'check',
@@ -214,7 +190,7 @@ function Comentario(props) {
                     {renderComentarios()}
                 </CommentList>
 
-                {localStorage.getItem('auth-token') ?
+                {localStorage.getItem('psim_access_token') ?
                     <>
                         {renderTextArea()}
 

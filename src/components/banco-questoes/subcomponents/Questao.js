@@ -7,6 +7,7 @@ import ListaErros from './ListaErros';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import Comentario from './Comentario'
+import { questaoAPI } from '../../../network/apiClient';
 
 const Enunciado = styled(Modal.Content)`
 	text-align: justify !important;
@@ -30,7 +31,7 @@ function Questao({ questao }) {
 	const [stateResp, setResposta] = useState("");
 	const [bugText, setBugText] = useState("")
 	const navigate = useNavigate()
-	const univel = parseInt(localStorage.getItem('access-level')) || 0
+	const univel = parseInt(localStorage.getItem('nivel_acesso')) || 0
 
 	function getEnunciado() {
 
@@ -78,19 +79,9 @@ function Questao({ questao }) {
 	}
 
 	function reportarProblema() {
-		const reqOptions = {
-			method: 'PUT',
-			headers: {
-				'Content-Type': 'application/json'
-			},
-			body: JSON.stringify({ id_questao: questao.id, mensagem_erro: bugText })
-		}
-
-		setBugText("")
-
-		fetch(process.env.REACT_APP_BACKEND + 'questao/', reqOptions)
+		questaoAPI.sinalizarErro({ id_questao: questao.id, mensagem_erro: bugText })
 			.then((resp) => {
-				if (resp.ok) {
+				if (resp.status === 200) {
 					toast({
 						title: 'Erro reportado com sucesso!',
 						icon: 'check',
@@ -190,7 +181,7 @@ function Questao({ questao }) {
 						<></>
 				}
 
-				{/* <Popup
+				<Popup
 					closeOnDocumentClick={false}
 					trigger={
 						<Button
@@ -204,7 +195,7 @@ function Questao({ questao }) {
 						<Comentario qid={questao.id}/>
 					}
 					on='click'
-				/> */}
+				/>
 
 				<Button
 					content={stateResp ? "Ocultar resposta" : "Mostrar resposta"}

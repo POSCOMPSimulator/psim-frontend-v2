@@ -1,6 +1,7 @@
 import { Label, Dropdown, Segment, Button, Form, Checkbox } from 'semantic-ui-react'
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components';
+import { questaoAPI } from '../../../network/apiClient';
 
 const DropdownYears = styled(Dropdown)`
     margin-bottom: 10px;
@@ -27,26 +28,13 @@ function Filtro(props) {
     const [areas, setAreas] = useState([])
     const [subareas, setSubareas] = useState([])
     const [apenasSinalizadas, setApenasSinalizadas] = useState(false)
-    const univel = parseInt(localStorage.getItem('access-level')) || 0
+    const univel = parseInt(localStorage.getItem('nivel_acesso')) || 0
 
     useEffect(() => {
 
-        const reqOptions = {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        }
-
-        fetch(process.env.REACT_APP_BACKEND + 'questao/sumario/', reqOptions)
-            .then((resp) => {
-                if (resp.ok) return resp.json()
-                else {
-                    console.log(resp)
-                }
-            })
+        questaoAPI.sumario()
             .then((res) => {
-                setAnos(res.anos.sort().map(v => {
+                setAnos(res.data.anos.sort().map(v => {
                     return {
                         key: v.toString(),
                         text: v.toString(),
@@ -54,7 +42,7 @@ function Filtro(props) {
                     }
                 }))
 
-                setAreas(res.areas.map(v => {
+                setAreas(res.data.areas.map(v => {
                     return {
                         key: v.substring(0, 3).toLowerCase(),
                         text: v + ' (' + v.substring(0, 3) + ')',
@@ -62,7 +50,7 @@ function Filtro(props) {
                     }
                 }))
 
-                setSubareas(res.subareas.toSorted((a,b) => a.localeCompare(b)).map(v => {
+                setSubareas(res.data.subareas.toSorted((a,b) => a.localeCompare(b)).map(v => {
                     return {
                         key: v,
                         text: v,

@@ -75,7 +75,7 @@ export const usuarioAPI = {
     get: () => { return axiosClient.get('/usuario') },
     registrar: (data) => { return axiosClient.post('/usuario', JSON.stringify(data)) },
     promover: (data) => { return axiosClient.put('/usuario', JSON.stringify(data)) },
-    remover: (data) => { return axiosClient.delete('/usuario', JSON.stringify(data)) },
+    remover: (email) => { return axiosClient.delete(`/usuario/${email}`) },
     login: (data) => { return axiosClient.post('/usuario/login', JSON.stringify(data)) },
     verificar: (data) => { return axiosClient.post('/usuario/verifica', JSON.stringify(data)) },
 }

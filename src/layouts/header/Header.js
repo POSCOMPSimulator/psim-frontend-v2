@@ -37,6 +37,7 @@ function Header() {
                         <>
                             {localStorage.getItem('verificado') === "false" ? <Menu.Item href='/simulado'>Verificar<br />Conta</Menu.Item> : <></>}
                             <Menu.Item href='/simulado'>Simulados</Menu.Item>
+                            <Menu.Item href='/perfil'>Perfil</Menu.Item>
                             <Menu.Item onClick={logout}>Sair</Menu.Item>
                         </>
                         :

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Grid, Loader, Icon, Button, Container, Dropdown, Confirm } from 'semantic-ui-react'
+import { Grid, Loader, Icon, Button, Dropdown, Confirm } from 'semantic-ui-react'
 import styled from 'styled-components';
 import CardSimulado from './subcomponents/CardSimulado';
 import { simuladoAPI } from "../../network/apiClient";
@@ -25,6 +25,7 @@ const GridSimulados = styled(Grid)`
 const CardSimulados = styled(Grid.Column)`
     padding-top: 10px !important;
     padding-bottom: 7.5px !important;
+    margin-bottom: 0.5% !important;
 `;
 
 const CustomRow = styled(Grid.Row)`
@@ -38,14 +39,14 @@ const Pag = styled.div`
 
 const CustomDrop = styled(Dropdown)`
     min-width: 400px !important;
-    float: right !important;
-`;
-
-const CustomButton = styled(Button)`
     float: left !important;
 `;
 
-const CustomContainer = styled(Container)`
+const CustomButton = styled(Button)`
+    float: right !important;
+`;
+
+const CustomContainer = styled.div`
     clear: both !important;
 `;
 
@@ -140,12 +141,7 @@ function Simulados() {
     }
 
     function pagination() {
-
-        if (esperando) {
-            return (
-                <Loader inline='centered' active={esperando} size='huge' />
-            )
-        }
+        if (esperando) return <Loader inline='centered' active={esperando} size='huge' />
 
         if (pagesNumber === 0) {
             return (
@@ -154,6 +150,8 @@ function Simulados() {
                 </Pag>
             )
         }
+
+        if (pagesNumber === 1) return <></>
 
         return (
             <Pag>

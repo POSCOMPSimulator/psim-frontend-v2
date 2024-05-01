@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom';
 import {
     Button,
     Form,
@@ -38,7 +37,7 @@ function CriadorSimulado() {
     const [inputValues, setInputValues] = useState(defaultSim)
     const [error, setError] = useState(null)
     const [criando, setCriando] = useState(false)
-    const navigate = useNavigate()
+    const [criado, setCriado] = useState(null)
 
     let handleChange = (_, d) => {
         setInputValues({
@@ -118,12 +117,16 @@ function CriadorSimulado() {
             .then((resp) => {
                 setCriando(false)
                 if (resp.status === 201) {
-                    navigate('/simulado')
+                    setCriado({
+                        content: `Um simulado com ID ${resp.data.text} foi criado, por favor guarde este ID. Ele será necessário para realizar o simulado.`
+                    })
+                    return
                 }
 
                 throw Error(resp.statusText);
 
-            }).catch((error) => {
+            })
+            .catch((error) => {
                 setCriando(false)
                 setError({
                     header: 'Erro na criação',
@@ -141,6 +144,14 @@ function CriadorSimulado() {
                     <Message error
                         header={error.header}
                         content={error.content}
+                    /> :
+                    <></>
+            }
+            {
+                criado ?
+                    <Message positive
+                        header='Simulado criado com sucesso!'
+                        content={criado.content}
                     /> :
                     <></>
             }

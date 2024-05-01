@@ -1,13 +1,9 @@
 import React, { useState } from 'react';
 import { InlineTex } from 'react-tex';
-import { Label, Modal, Image, List, Button, Popup, Input } from 'semantic-ui-react'
-import { SemanticToastContainer, toast } from 'react-semantic-toasts';
+import { Label, Modal, Image, List, Button } from 'semantic-ui-react'
+import { SemanticToastContainer } from 'react-semantic-toasts';
 import 'react-semantic-toasts/styles/react-semantic-alert.css';
-import ListaErros from './ListaErros';
 import styled from 'styled-components';
-import { useNavigate } from 'react-router-dom';
-import Comentario from './Comentario'
-import { questaoAPI } from '../../../network/apiClient';
 
 const Enunciado = styled(Modal.Content)`
 	text-align: justify !important;
@@ -29,9 +25,6 @@ const Resposta = styled(Alternativa)`
 
 function Questao({ questao }) {
 	const [stateResp, setResposta] = useState("");
-	const [bugText, setBugText] = useState("")
-	const navigate = useNavigate()
-	const univel = parseInt(localStorage.getItem('nivel_acesso')) || 0
 
 	function getEnunciado() {
 
@@ -78,26 +71,6 @@ function Questao({ questao }) {
 		)
 	}
 
-	function reportarProblema() {
-		questaoAPI.sinalizarErro({ id_questao: questao.id, mensagem_erro: bugText })
-			.then((resp) => {
-				if (resp.status === 200) {
-					toast({
-						title: 'Erro reportado com sucesso!',
-						icon: 'check',
-						color: 'green',
-						description: <p>Nossos moderadores tratarão do erro assim que possível.</p>
-					})
-				}
-			}).catch((error) => {
-				console.log(error)
-			})
-	}
-
-	function editarQuestao() {
-		navigate('/questoes/editar', {state: questao})
-	}
-
 	return (
 		<>
 			<SemanticToastContainer position="top-right" />
@@ -117,86 +90,7 @@ function Questao({ questao }) {
 				{getAlternativas()}
 			</Modal.Content>
 			<Modal.Actions>
-				{
-					univel > 0 ?
-						<Button
-							content="Editar"
-							labelPosition='left'
-							icon='edit'
-							onClick={() => editarQuestao()}
-							color='yellow'
-						/> :
-						<></>
-				}
-				{
-					univel === 0 ?
-						<Popup
-							hideOnScroll
-							trigger={
-								<Button
-									content="Reportar erro"
-									labelPosition='left'
-									icon='bug'
-									color='orange'
-								/>
-							}
-							content={
-								<>
-									<Input placeholder='Escreva aqui o erro...' action={{
-										color: 'orange',
-										labelPosition: 'right',
-										content: 'Reportar',
-										icon: 'send',
-										disabled: bugText === "",
-										onClick: () => reportarProblema()
-									}} onChange={(e) => setBugText(e.target.value)} value={bugText} list='erros-comuns' />
-									<datalist id='erros-comuns'>
-										<option value='Enunciado ou alternativas estão incorretos.' />
-										<option value='Resposta está incorreta.' />
-										<option value='LATEX não está renderizando corretamente.' />
-										<option value='Imagem não está renderizando corretamente.' />
-									</datalist>
-								</>
-							}
-							on='click'
-						/> :
-						<></>
-				}
-
-				{
-					univel > 0 ?
-						<Popup
-							hideOnScroll
-							trigger={
-								<Button
-									content="Listar erros"
-									labelPosition='left'
-									icon='bug'
-									color='orange'
-								/>
-							}
-							content={<ListaErros qid={questao.id} />}
-							on='click'
-						/> :
-						<></>
-				}
-
-				<Popup
-					closeOnDocumentClick={false}
-					trigger={
-						<Button
-							content="Mostrar comentários"
-							labelPosition='left'
-							icon='chat'
-							color='teal'
-						/>
-					}
-					content={
-						<Comentario qid={questao.id}/>
-					}
-					on='click'
-				/>
-
+				
 				<Button
 					content={stateResp ? "Ocultar resposta" : "Mostrar resposta"}
 					labelPosition='left'

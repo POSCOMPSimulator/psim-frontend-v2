@@ -1,4 +1,5 @@
-import { Menu, Image } from 'semantic-ui-react'
+import { Menu, Image, DropdownMenu,
+    DropdownItem, Dropdown } from 'semantic-ui-react'
 import styled from 'styled-components';
 
 const CustomMenu = styled(Menu)`
@@ -16,7 +17,15 @@ function Header() {
             </Menu.Item>
             <Menu.Menu position='right'>
                 <Menu.Item href='/questoes'>Questões</Menu.Item>
-                <Menu.Item href='/simulado/novo'>Simulados</Menu.Item>
+                <Menu.Item>
+                    <Dropdown text='Simulado'>
+                        <DropdownMenu>
+                            <DropdownItem href='/simulado/novo'>Novo</DropdownItem>
+                            <DropdownItem href='/simulado/realizar/'>Realizar</DropdownItem>
+                            <DropdownItem href='/simulado/resultado/'>Ver resultado</DropdownItem>
+                        </DropdownMenu>
+                    </Dropdown>
+                </Menu.Item>
             </Menu.Menu>
         </CustomMenu>
     )

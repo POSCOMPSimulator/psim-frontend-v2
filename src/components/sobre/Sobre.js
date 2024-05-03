@@ -44,8 +44,7 @@ function Sobre() {
             </p>
 
             <p><b>
-                Dessa forma, o POSCOMP Simulator (carinhosamente, PSIM) surge como uma aplicação Web que permite que um estudante consulte questões, realize simulados e avalie sua evolução ao longo dos simulados.
-                Para a realização dos simulados é necessário, registrar-se e verificar sua conta (usando o código encaminhado para seu e-mail).
+                Dessa forma, o POSCOMP Simulator (carinhosamente, PSIM) surge como uma aplicação Web que permite que um estudante consulte questões e realize simulados.
             </b></p>
 
             <h2>Equipe desenvolvedora</h2>

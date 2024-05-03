@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState, useCallback } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useLocation, useNavigate, useParams } from 'react-router-dom'
 import { Loader, Pagination, Icon, Label, Confirm } from 'semantic-ui-react'
 import styled from 'styled-components'
 import Questao from './subcomponents/Questao';
@@ -62,6 +62,7 @@ function AmbienteSimulacao() {
     const [hidden, setHidden] = useState(false);
     const [atualizando, setAtualizando] = useState(false)
     const [open, setOpen] = useState(false)
+    let state = useLocation()
     const navigate = useNavigate();
 
     function countDown() {
@@ -81,8 +82,9 @@ function AmbienteSimulacao() {
 
     useEffect(() => {
 
-        simuladoAPI.atualizaEstado(id, 'iniciar', {})
+        simuladoAPI.atualizaEstado(id, state.state.estado, {})
             .then((resp) => {
+                console.log(resp)
                 if (resp.status === 202) {
                     let data = resp.data
                     let q = data.questoes.map((q, i) => {
@@ -112,7 +114,7 @@ function AmbienteSimulacao() {
                 console.log(error)
             })
 
-    }, [id])
+    }, [id, state.state.estado])
 
     const updateSimulado = useCallback((q) => {
 
@@ -189,18 +191,6 @@ function AmbienteSimulacao() {
             tempo_restante: tempoRestante.current,
             respostas: aux
         }
-
-        // simuladoAPI.atualizaEstado(id, 'finalizar', body)
-        //     .then((resp) => {
-        //         if (resp.status === 202) navigate('/simulado')
-        //         else {
-        //             console.log('Algo deu errado.')
-        //             console.log(resp)
-        //         }
-        //     })
-        //     .catch((error) => {
-        //         console.log(error)
-        //     })
         
         simuladoAPI.atualizaRespostas(id, body)
             .then((resp) => {

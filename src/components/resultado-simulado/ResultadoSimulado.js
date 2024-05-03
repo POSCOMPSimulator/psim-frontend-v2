@@ -44,11 +44,12 @@ function ResultadoSimulado() {
                 if (resp.status === 200) {
                     
                     let data = resp.data
+                    console.log(data)
                     console.log(data.respostas_atuais)
 
                     let q = data.questoes.map((q, i) => {
                         q.index = i
-                        q.alternativa_marcada = data.respostas_atuais.resps[i]
+                        q.alternativa_marcada = data.respostas_atuais[q.id]
                         return q
                     })
 

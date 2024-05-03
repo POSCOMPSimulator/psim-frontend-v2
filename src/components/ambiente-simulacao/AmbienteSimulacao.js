@@ -197,7 +197,7 @@ function AmbienteSimulacao() {
                 if (resp.status === 200) {
                     simuladoAPI.atualizaEstado(id, 'finalizar', {})
                         .then((resp) => {
-                            if (resp.status === 202) navigate('/simulado')
+                            if (resp.status === 202) navigate(`/simulado/resultado/${id}`)
                             else {
                                 console.log('Algo deu errado.')
                                 console.log(resp)

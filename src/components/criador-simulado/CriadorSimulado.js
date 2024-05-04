@@ -20,6 +20,7 @@ const optionsYears = [
     { key: '2018', text: '2018', value: '2018' },
     { key: '2019', text: '2019', value: '2019' },
     { key: '2022', text: '2022', value: '2022' },
+    { key: '2023', text: '2023', value: '2023' },
 ]
 
 const defaultSim = {
@@ -27,7 +28,7 @@ const defaultSim = {
     qtdMat: '20',
     qtdFun: '30',
     qtdTec: '20',
-    years: ['2016', '2017', '2018', '2019', '2022'],
+    years: ['2016', '2017', '2018', '2019', '2022', '2023'],
     time: '240'
 }
 

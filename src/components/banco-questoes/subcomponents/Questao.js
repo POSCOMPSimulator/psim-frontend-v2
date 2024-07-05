@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { InlineTex } from 'react-tex';
 import { Label, Modal, Image, List, Button } from 'semantic-ui-react'
-import { SemanticToastContainer } from 'react-semantic-toasts';
 import 'react-semantic-toasts/styles/react-semantic-alert.css';
 import styled from 'styled-components';
 
@@ -9,6 +8,7 @@ const Enunciado = styled(Modal.Content)`
 	text-align: justify !important;
 	font-size: 1.1rem !important;
 	max-height: calc(35vh) !important;
+	transform: translateZ(0);
 `;
 
 const Alternativa = styled(List.Item)`
@@ -73,7 +73,6 @@ function Questao({ questao }) {
 
 	return (
 		<>
-			<SemanticToastContainer position="top-right" />
 			<Modal.Header>
 				<Label.Group size='large'>
 					<Label>Ano: {questao.ano}</Label>

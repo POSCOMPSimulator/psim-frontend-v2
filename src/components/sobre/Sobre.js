@@ -47,6 +47,18 @@ function Sobre() {
                 Dessa forma, o POSCOMP Simulator (carinhosamente, PSIM) surge como uma aplicação Web que permite que um estudante consulte questões e realize simulados.
             </b></p>
 
+            <h2>Como utilizar</h2>
+
+            <ol>
+                <li>Acesse <b>Simulado &gt; Novo</b>.</li>
+                <li>Escolha a configuração desejada e espere a confirmação da criação.</li>
+                <li><b>Guarde o ID gerado para o simulado</b>, ele será necessário para realizar o simulado.</li>
+                <li>Acesse <b>Simulado &gt; Realizar</b>, insira o ID e clique em Realizar.</li>
+                <li>Você será perguntado se deseja realmente iniciar o simulado. E caso já tenha iniciado, se deseja continuar ou reiniciar.</li>
+                <li>Após resolver as questões e entregar o simulado, você será levado para a tela de gabarito.</li>
+                <li>Caso deseja ver novamente o resultado de um simulado vá em <b>Simulado &gt; Ver resultado</b> e insira o id do respectivo simulado.</li>
+            </ol>
+
             <h2>Equipe desenvolvedora</h2>
 
             <p>

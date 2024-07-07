@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { InlineTex } from 'react-tex';
-import { Label, Modal, Image, List, Button } from 'semantic-ui-react'
+import { Label, Modal, Image, List, Button, Container } from 'semantic-ui-react'
 import 'react-semantic-toasts/styles/react-semantic-alert.css';
 import styled from 'styled-components';
 
@@ -21,6 +21,23 @@ const Alternativa = styled(List.Item)`
 const Resposta = styled(Alternativa)`
 	font-weight: bold !important;
 	background-color: rgb(111, 221, 111) !important;
+`;
+
+const ExplicacaoScroll = styled.div`
+	padding: 5px;
+	margin: 10px;
+	border-radius: 10px;
+	overflow: hidden !important;
+	background-color: #fdfdfd !important;
+`
+
+const Explicacao = styled(Container)`
+	text-align: justify !important;
+	font-size: 1.1rem !important;
+	max-height: calc(35vh) !important;
+	transform: translateZ(0);
+	font-weight: normal !important;
+	overflow-y: auto !important;
 `;
 
 function Questao({ questao }) {
@@ -58,6 +75,14 @@ function Questao({ questao }) {
 								<span><b>{letras[ind]}</b></span>
 								<InlineTex texContent={resp} />
 							</List.Content>
+							{
+								questao.explicacao.String !== '' ? 
+								<ExplicacaoScroll><Explicacao>
+									{/* <InlineTex texContent={`Hello $$\\\\[3pt]$$ World`} /> */}
+									<InlineTex texContent={questao.explicacao.String} />
+								</Explicacao></ExplicacaoScroll> :
+								<></>
+							}
 						</Resposta> :
 						<Alternativa key={ind}>
 							<List.Content>

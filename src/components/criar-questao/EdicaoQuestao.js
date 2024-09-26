@@ -246,7 +246,7 @@ const SubmitQuestionForm = () => {
                         Submeter Questão
                     </Button>
                     <Button type='button' onClick={() => setJsonModalOpen(true)}>
-                        Inserir JSON
+                        Importar JSON
                     </Button>
                 </Form>
 
@@ -266,7 +266,7 @@ const SubmitQuestionForm = () => {
                     </Modal.Actions>
                 </Modal>
                 <Modal open={jsonModalOpen} onClose={() => setJsonModalOpen(false)}>
-                    <Modal.Header>Inserir JSON</Modal.Header>
+                    <Modal.Header>Importar JSON</Modal.Header>
                     <Modal.Content>
                         <TextArea
                             placeholder='Cole o JSON aqui'
@@ -277,7 +277,7 @@ const SubmitQuestionForm = () => {
                     </Modal.Content>
                     <Modal.Actions>
                         <Button onClick={() => setJsonModalOpen(false)}>Cancelar</Button>
-                        <Button onClick={handleJsonSubmit}>Carregar</Button>
+                        <Button onClick={handleJsonSubmit}>Importar</Button>
                     </Modal.Actions>
                 </Modal>
             </FormContainer>

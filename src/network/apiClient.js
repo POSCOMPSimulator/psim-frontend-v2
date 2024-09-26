@@ -10,6 +10,7 @@ const axiosClient = axios.create({
 export const questaoAPI = {
     get: (params) => { return axiosClient.get('/questao', { params }) },
     sumario: () => { return axiosClient.get('/questao/sumario') },
+    create: (data, admincode) => { return axiosClient.post(`/questao/${admincode}`, JSON.stringify(data)) },
 }
 
 export const simuladoAPI = {

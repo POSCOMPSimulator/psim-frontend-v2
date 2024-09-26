@@ -8,6 +8,7 @@ import ResultadoSimulado from './components/resultado-simulado/ResultadoSimulado
 import NoMatch from './components/errors/NoMatch'
 import RealizarSimulado from './components/realizar/Realizar'
 import FormResultadoSimulado from './components/resultado/Resultado'
+import SubmitQuestionForm from './components/criar-questao/EdicaoQuestao'
 
 function App() {
 
@@ -16,6 +17,7 @@ function App() {
       <Routes>
         <Route path='/' exact element={<Sobre />} />
         <Route path='/questoes' element={<BancoQuestoes />} />
+        <Route path='/questoes/novo' element={<SubmitQuestionForm />} />
         <Route path='/simulado/novo' element={<CriadorSimulado />} />
         <Route path='/simulado/realizar/' element={<RealizarSimulado />} />
         <Route path='/simulado/realizar/:id' element={<AmbienteSimulacao />} />

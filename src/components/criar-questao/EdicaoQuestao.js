@@ -126,12 +126,14 @@ const SubmitQuestionForm = () => {
         );
 
         formData.imagens.enunciado = uploadedImageUrls.map((url, index) => {
-            return url.replace("https://raw.githubusercontent.com/POSCOMPSimulator/questoes_poscomp/main/", "");
+            return url.replace("https://raw.githubusercontent.com/POSCOMPSimulator/questoes_poscomp/main/", "").split('.').slice(0, -1).join('.');
         });
 
         questaoAPI.create(formData, adminCode)
             .then((_) => {
-                setFormData(blankFormData)
+                setFormData(blankFormData);
+                setImageFiles([]);
+                setImagePreviews([]);
             })
             .catch((error) => {
                 console.log(error)
